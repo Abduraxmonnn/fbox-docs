@@ -1,0 +1,48 @@
+# ----------------------------
+# OS files
+# ----------------------------
+.DS_Store
+Thumbs.db
+
+# ----------------------------
+# PyCharm / JetBrains
+# ----------------------------
+.idea/
+*.iml
+
+# ----------------------------
+# Node / Mintlify
+# ----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Mintlify local build output
+.mintlify/
+
+# ----------------------------
+# Environment files
+# ----------------------------
+.env
+.env.*
+
+# ----------------------------
+# Logs
+# ----------------------------
+logs/
+*.log
+
+# ----------------------------
+# Python (PyCharm often creates these)
+# ----------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# ----------------------------
+# Optional: Editor configs
+# ----------------------------
+.vscode/

@@ -1,0 +1,160 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "almond",
+  "name": "FiscalBox Documentation",
+  "colors": {
+    "primary": "#DC2626",
+    "light": "#F87171",
+    "dark": "#7F1D1D"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": [
+              "pages/index",
+              "pages/quickstart",
+              "pages/development"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API reference",
+        "groups": [
+          {
+            "group": "API documentation",
+            "pages": [
+              "pages/api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Order",
+            "pages": [
+              "pages/api-reference/endpoint/order/create",
+              "pages/api-reference/endpoint/order/refuse",
+              "pages/api-reference/endpoint/order/print"
+            ]
+          },
+          {
+            "group": "Click (Payment)",
+            "pages": [
+              "pages/api-reference/endpoint/payment/click",
+              "pages/api-reference/endpoint/payment/payme",
+              "pages/api-reference/endpoint/payment/uzum",
+              "pages/api-reference/endpoint/payment/anor",
+              "pages/api-reference/endpoint/payment/xumo",
+              "pages/api-reference/endpoint/payment/uzcard",
+              "pages/api-reference/endpoint/payment/scan2pay"
+            ]
+          },
+          {
+            "group": "Payment",
+            "icon": "money-check-dollar",
+            "expanded": false,
+            "pages": [
+              "pages/api-reference/openapi/payment/click/index",
+              "pages/api-reference/openapi/payment/click/pass",
+              "pages/api-reference/openapi/payment/click/fiscalization",
+
+              "pages/api-reference/openapi/payment/payme/index",
+              "pages/api-reference/openapi/payment/payme/go",
+              "pages/api-reference/openapi/payment/payme/fiscalization",
+
+              "pages/api-reference/openapi/payment/uzum/index",
+              "pages/api-reference/openapi/payment/uzum/fastpay",
+              "pages/api-reference/openapi/payment/uzum/fiscalization",
+
+              "pages/api-reference/openapi/payment/anor/index",
+              "pages/api-reference/openapi/payment/anor/anorbank",
+              "pages/api-reference/openapi/payment/anor/fiscalization"
+            ]
+          },
+          {
+            "group": "Z-Report & X-Report",
+            "pages": [
+              "pages/api-reference/endpoint/report/zreport-open",
+              "pages/api-reference/endpoint/report/zreport-close",
+              "pages/api-reference/endpoint/report/zreport-open-print",
+              "pages/api-reference/endpoint/report/zreport-info",
+              "pages/api-reference/endpoint/report/zreport-sverka"
+            ]
+          },
+          {
+            "group": "Info",
+            "pages": [
+              "pages/api-reference/endpoint/info/info"
+            ]
+          },
+          {
+            "group": "Banners",
+            "pages": [
+              "pages/api-reference/endpoint/banner/banner"
+            ]
+          },
+          {
+            "group": "Billing",
+            "pages": [
+              "pages/api-reference/endpoint/billing/auth",
+              "pages/api-reference/endpoint/billing/order-count"
+            ]
+          },
+          {
+            "group": "Tools",
+            "pages": [
+              "pages/api-reference/endpoint/tool/open-cash-drawer"
+            ]
+          },
+          {
+            "group": "Customization",
+            "pages": [
+              "pages/essentials/settings",
+              "pages/essentials/navigation"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Documentation",
+          "href": "https://mintlify.com/docs",
+          "icon": "book-open-cover"
+        },
+        {
+          "anchor": "Blog",
+          "href": "https://mintlify.com/blog",
+          "icon": "newspaper"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png"
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/mintlify",
+      "github": "https://github.com/mintlify",
+      "linkedin": "https://linkedin.com/company/mintlify"
+    }
+  }
+}

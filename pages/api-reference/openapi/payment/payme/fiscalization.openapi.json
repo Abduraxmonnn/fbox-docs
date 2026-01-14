@@ -1,0 +1,132 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Click Fiscalization API",
+    "description": "Fiscalization endpoint for Click payments",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.fiscalbox.uz"
+    }
+  ],
+  "paths": {
+    "/payment/click/fiscal": {
+      "post": {
+        "summary": "Fiscalize Click payment",
+        "operationId": "clickFiscalization",
+        "tags": ["Click Payment"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiscalizationRequest"
+              },
+              "example": {
+                "order_id": "ORD-12345",
+                "amount": 150000,
+                "currency": "UZS",
+                "terminal_id": "T-001",
+                "payment_method": "CLICK"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fiscalization successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FiscalizationResponse"
+                },
+                "example": {
+                  "status": "SUCCESS",
+                  "fiscal_receipt_number": "FR-987654",
+                  "fiscal_sign": "A1B2C3D4",
+                  "created_at": "2026-01-14T10:15:30Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FiscalizationRequest": {
+        "type": "object",
+        "required": ["order_id", "amount", "terminal_id"],
+        "properties": {
+          "order_id": {
+            "type": "string",
+            "description": "Unique order identifier"
+          },
+          "amount": {
+            "type": "integer",
+            "description": "Payment amount in tiyin",
+            "example": 150000
+          },
+          "currency": {
+            "type": "string",
+            "enum": ["UZS"],
+            "default": "UZS"
+          },
+          "terminal_id": {
+            "type": "string",
+            "description": "Fiscal terminal identifier"
+          },
+          "payment_method": {
+            "type": "string",
+            "enum": ["CLICK"]
+          }
+        }
+      },
+      "FiscalizationResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "SUCCESS"
+          },
+          "fiscal_receipt_number": {
+            "type": "string"
+          },
+          "fiscal_sign": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
