@@ -1,15 +1,206 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Title",
-    "description": "Title",
+    "title": "Payme Go API",
+    "description": "Payment endpoint for Payme payments",
+    "license": {
+      "name": "MIT",
+      "identifier": ""
+    },
     "version": "1.0.0"
   },
   "servers": [
     {
-      "url": "https"
+      "url": "https://fbox.ngrok.io"
     }
   ],
   "paths": {
+    "/payment/payme": {
+      "post": {
+        "summary": "Payme Go payment",
+        "operationId": "paymeGoPayment",
+        "tags": [
+          "Payme go Payment"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentRequest"
+              },
+              "example": {
+                "amount": 1000,
+                "qr_code": "50502044301381396427"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fiscalization successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse"
+                },
+                "example": {
+                  "data": {
+                    "amount": 1000,
+                    "transaction_id": "a12fc00f-5af5-65b8-adf8-74bff44680ee",
+                    "payment_id": "696e0246c9a128176d5934d8",
+                    "inn": "123456789",
+                    "qr_code": "50502244301381336427",
+                    "kkm_id": "00000011",
+                    "device_id": "00000011",
+                    "status": "successfully",
+                    "message": "successfully payment",
+                    "client_phone_number": "998712565009"
+                  },
+                  "error": null,
+                  "is_success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request (status code: 200)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 104,
+                    "message": "BILLING_ERROR",
+                    "data": null
+                  },
+                  "is_success": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentRequest": {
+        "type": "object",
+        "required": [
+          "amount",
+          "qr_code"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "Payment amount in sums",
+            "example": 1000
+          },
+          "qr_code": {
+            "type": "string",
+            "description": "Unique transaction identifier"
+          }
+        }
+      },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "integer"
+              },
+              "transaction_id": {
+                "type": "string",
+                "nullable": false,
+                "example": "3dbec60e-df7d-4c14-929a-8d79b499f7cb"
+              },
+              "payment_id": {
+                "type": "string",
+                "nullable": false
+              },
+              "inn": {
+                "type": "string",
+                "nullable": false
+              },
+              "qr_code": {
+                "type": "string",
+                "nullable": false
+              },
+              "kkm_id": {
+                "type": "string",
+                "nullable": false
+              },
+              "device_id": {
+                "type": "string",
+                "nullable": false
+              },
+              "status": {
+                "type": "string",
+                "nullable": false,
+                "example": "successfully"
+              },
+              "message": {
+                "type": "string",
+                "nullable": false
+              },
+              "client_phone_number": {
+                "type": "string",
+                "nullable": false,
+                "example": "998712565009"
+              }
+            }
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "nullable": true,
+            "default": null
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 104
+              },
+              "message": {
+                "type": "string",
+                "example": "BILLING_ERROR"
+              },
+              "data": {
+                "type": "string",
+                "nullable": true,
+                "default": null
+              }
+            }
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }
+    }
   }
 }

@@ -30,7 +30,7 @@
                 "$ref": "#/components/schemas/PaymentRequest"
               },
               "example": {
-                "amount": 150000,
+                "amount": 1000,
                 "qr_code": "test"
               }
             }
@@ -38,7 +38,7 @@
         },
         "responses": {
           "200": {
-            "description": "Fiscalization successful",
+            "description": "Payment successful",
             "content": {
               "application/json": {
                 "schema": {
@@ -66,7 +66,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error400Response"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 7,
+                    "message": "{\"payment_id\":[\"This field may not be blank.\"]}",
+                    "data": null
+                  },
+                  "is_success": false
                 }
               }
             }
@@ -90,7 +99,7 @@
           "amount": {
             "type": "integer",
             "description": "Payment amount in sums",
-            "example": 150000
+            "example": 1000
           },
           "qr_code": {
             "type": "string",
@@ -101,30 +110,85 @@
       "PaymentResponse": {
         "type": "object",
         "properties": {
-          "status_code": {
-            "type": "integer",
-            "example": 0
+          "data": {
+            "type": "object",
+            "properties": {
+              "status_code": {
+                "type": "integer",
+                "nullable": false
+              },
+              "status": {
+                "type": "string",
+                "nullable": false,
+                "example": "successfully"
+              },
+              "message": {
+                "type": "string",
+                "nullable": true
+              },
+              "amount": {
+                "type": "integer"
+              },
+              "payment_id": {
+                "type": "string",
+                "nullable": false
+              },
+              "transaction_id": {
+                "type": "string",
+                "nullable": false,
+                "example": "3dbec60e-df7d-4c14-929a-8d79b499f7cb"
+              },
+              "qr_code": {
+                "type": "string",
+                "nullable": true,
+                "example": null
+              },
+              "client_phone_number": {
+                "type": "string",
+                "nullable": true,
+                "example": "998712565009"
+              }
+            }
           },
-          "status": {
-            "type": "string"
-          },
-          "fiscal_sign": {
-            "type": "string"
-          },
-          "created_at": {
+          "error": {
             "type": "string",
-            "format": "date-time"
+            "nullable": true
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": true
           }
         }
       },
-      "ErrorResponse": {
+      "Error400Response": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "string"
+          "data": {
+            "type": "string",
+            "nullable": true,
+            "default": null
           },
-          "message": {
-            "type": "string"
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 7
+              },
+              "message": {
+                "type": "string",
+                "example": "{\"payment_id\":[\"This field may not be blank.\"]}"
+              },
+              "data": {
+                "type": "string",
+                "nullable": true,
+                "default": null
+              }
+            }
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": false
           }
         }
       }

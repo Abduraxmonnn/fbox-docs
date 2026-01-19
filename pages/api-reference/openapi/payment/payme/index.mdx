@@ -1,12 +1,39 @@
 ---
 title: PayMe
-description: PayMe payment and fiscalization APIs
+description: PayMe payment initiation and fiscalization APIs
 ---
 
-## PayMe Payment APIs
+## Overview
 
-This section contains all endpoints related to **PayMe payments**, including
-payment initiation and fiscalization.
+The **PayMe API** provides a full payment processing workflow using PayMe,
+covering both **payment initiation** and **fiscalization**.
+
+The integration is divided into two independent stages:
+
+1. **PayMe Go** – initiates a PayMe payment using an amount and QR code.
+2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
+
+This approach ensures reliable payment processing and compliance with fiscal regulations.
+
+---
+
+## Payment Flow
+
+A typical PayMe payment flow consists of the following steps:
+
+1. The client initiates a payment via the **PayMe Go API**
+2. PayMe processes the payment and returns a unique `payment_id`
+3. After successful payment, the transaction is sent for **fiscalization**
+4. A fiscal receipt is generated and registered in the Soliq system
+
+Each step is handled by a dedicated endpoint.
+
+---
+
+## PayMe APIs
+
+Explore the PayMe endpoints below to integrate payment and fiscalization
+into your system.
 
 <Columns cols={2}>
     <Card
@@ -14,7 +41,8 @@ payment initiation and fiscalization.
         icon="credit-card"
         href="payme/go"
     >
-        Initiate and process PayMe payments.
+        Initiate PayMe payments by providing the payment amount and QR code.
+        Returns a payment identifier used for further fiscal processing.
     </Card>
 
     <Card
@@ -22,6 +50,14 @@ payment initiation and fiscalization.
         icon="receipt"
         href="payme/fiscalization"
     >
-        Fiscalize completed PayMe payments and generate fiscal receipts.
+        Fiscalize completed PayMe payments and generate official fiscal receipts.
     </Card>
 </Columns>
+
+---
+
+## Environment
+
+The PayMe APIs are available in the following environments:
+
+- **Payment API**

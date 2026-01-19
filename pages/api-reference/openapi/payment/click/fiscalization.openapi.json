@@ -26,7 +26,7 @@
                 "$ref": "#/components/schemas/FiscalizationRequest"
               },
               "example": {
-                "payment_id": "2354512461",
+                "payment_id": "4710103925",
                 "qr_code": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
               }
             }
@@ -59,7 +59,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error400Response"
                 },
                 "example": {
                   "data": null,
@@ -92,7 +92,7 @@
           "payment_id": {
             "type": "string",
             "description": "Unique order identifier received in the /click/pass response and provided by Click.",
-            "example": "2354512461"
+            "example": "4710103925"
           },
           "qr_code": {
             "type": "string",
@@ -103,10 +103,6 @@
       },
       "FiscalizationResponse": {
         "type": "object",
-        "required": [
-          "data",
-          "is_success"
-        ],
         "properties": {
           "data": {
             "type": "object",
@@ -146,11 +142,8 @@
           }
         }
       },
-      "ErrorResponse": {
+      "Error400Response": {
         "type": "object",
-        "required": [
-          "is_success"
-        ],
         "properties": {
           "data": {
             "type": "string",

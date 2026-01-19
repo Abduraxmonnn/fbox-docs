@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
+  "theme": "aspen",
   "name": "FiscalBox Documentation",
   "colors": {
     "primary": "#DC2626",

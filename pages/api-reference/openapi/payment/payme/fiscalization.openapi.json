@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Click Fiscalization API",
-    "description": "Fiscalization endpoint for Click payments",
+    "title": "Payme Fiscalization API",
+    "description": "Fiscalization endpoint for Payme fiscalization",
     "version": "1.0.0"
   },
   "servers": [
@@ -11,11 +11,13 @@
     }
   ],
   "paths": {
-    "/payment/click/fiscal": {
+    "/payment/payme_confirm": {
       "post": {
-        "summary": "Fiscalize Click payment",
-        "operationId": "clickFiscalization",
-        "tags": ["Click Payment"],
+        "summary": "Fiscalization Payme payment",
+        "operationId": "paymeFiscalization",
+        "tags": [
+          "Payme Fiscalization"
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -24,11 +26,8 @@
                 "$ref": "#/components/schemas/FiscalizationRequest"
               },
               "example": {
-                "order_id": "ORD-12345",
-                "amount": 150000,
-                "currency": "UZS",
-                "terminal_id": "T-001",
-                "payment_method": "CLICK"
+                "payment_id": "696e0246c9a128176d5934d8",
+                "qr_code": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
               }
             }
           }
@@ -42,20 +41,38 @@
                   "$ref": "#/components/schemas/FiscalizationResponse"
                 },
                 "example": {
-                  "status": "SUCCESS",
-                  "fiscal_receipt_number": "FR-987654",
-                  "fiscal_sign": "A1B2C3D4",
-                  "created_at": "2026-01-14T10:15:30Z"
+                  "data": {
+                    "id": 123,
+                    "result": {
+                      "receipt": {
+                        "_id": "696e0246c9a128176d5934d8",
+                        "create_time": 1768816711011,
+                        "pay_time": 1768816711555
+                      }
+                    },
+                    "error": null
+                  },
+                  "error": null,
+                  "is_success": true
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request",
+            "description": "Invalid request (status code: 200)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/Error400Response"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 105,
+                    "message": "{\"payme_id\":[\"This field may not be null.\"]}HTTP Exception 400 Bad Request",
+                    "data": null
+                  },
+                  "is_success": false
                 }
               }
             }
@@ -71,59 +88,104 @@
     "schemas": {
       "FiscalizationRequest": {
         "type": "object",
-        "required": ["order_id", "amount", "terminal_id"],
+        "required": [
+          "payment_id",
+          "qr_code"
+        ],
         "properties": {
-          "order_id": {
+          "payment_id": {
             "type": "string",
-            "description": "Unique order identifier"
+            "description": "Unique order identifier received in the /payme/go response and provided by Payme.",
+            "example": "696e0246c9a128176d5934d8"
           },
-          "amount": {
-            "type": "integer",
-            "description": "Payment amount in tiyin",
-            "example": 150000
-          },
-          "currency": {
+          "qr_code": {
             "type": "string",
-            "enum": ["UZS"],
-            "default": "UZS"
-          },
-          "terminal_id": {
-            "type": "string",
-            "description": "Fiscal terminal identifier"
-          },
-          "payment_method": {
-            "type": "string",
-            "enum": ["CLICK"]
+            "description": "Link to fiscalization transaction on Soliq",
+            "example": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
           }
         }
       },
       "FiscalizationResponse": {
         "type": "object",
         "properties": {
-          "status": {
-            "type": "string",
-            "example": "SUCCESS"
+          "data": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "nullable": true,
+                "example": 123
+              },
+              "result": {
+                "type": "object",
+                "properties": {
+                  "receipt": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "696e0046c9a1a8176d5974d8"
+                      },
+                      "create_time": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1768816711011
+                      },
+                      "pay_time": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1768816711555
+                      }
+                    }
+                  }
+                }
+              },
+              "error": {
+                "type": "string",
+                "nullable": true
+              }
+            }
           },
-          "fiscal_receipt_number": {
-            "type": "string"
+          "error": {
+            "type": "object",
+            "nullable": true
           },
-          "fiscal_sign": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
+          "is_success": {
+            "type": "boolean",
+            "example": true
           }
         }
       },
-      "ErrorResponse": {
+      "Error400Response": {
         "type": "object",
         "properties": {
-          "error": {
-            "type": "string"
+          "data": {
+            "type": "string",
+            "nullable": true,
+            "default": null
           },
-          "message": {
-            "type": "string"
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 7
+              },
+              "message": {
+                "type": "string",
+                "example": "{\"payment_id\":[\"This field may not be blank.\"]}"
+              },
+              "data": {
+                "type": "string",
+                "nullable": true,
+                "default": null
+              }
+            }
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": false
           }
         }
       }
