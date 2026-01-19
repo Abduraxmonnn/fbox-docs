@@ -34,22 +34,11 @@
           },
           {
             "group": "Order",
+            "icon": "receipt",
             "pages": [
               "pages/api-reference/endpoint/order/create",
               "pages/api-reference/endpoint/order/refuse",
               "pages/api-reference/endpoint/order/print"
-            ]
-          },
-          {
-            "group": "Click (Payment)",
-            "pages": [
-              "pages/api-reference/endpoint/payment/click",
-              "pages/api-reference/endpoint/payment/payme",
-              "pages/api-reference/endpoint/payment/uzum",
-              "pages/api-reference/endpoint/payment/anor",
-              "pages/api-reference/endpoint/payment/xumo",
-              "pages/api-reference/endpoint/payment/uzcard",
-              "pages/api-reference/endpoint/payment/scan2pay"
             ]
           },
           {
@@ -76,6 +65,7 @@
           },
           {
             "group": "Z-Report & X-Report",
+            "icon": "file-waveform",
             "pages": [
               "pages/api-reference/endpoint/report/zreport-open",
               "pages/api-reference/endpoint/report/zreport-close",
@@ -86,18 +76,21 @@
           },
           {
             "group": "Info",
+            "icon": "circle-info",
             "pages": [
               "pages/api-reference/endpoint/info/info"
             ]
           },
           {
             "group": "Banners",
+            "icon": "bullhorn",
             "pages": [
               "pages/api-reference/endpoint/banner/banner"
             ]
           },
           {
             "group": "Billing",
+            "icon": "chart-pie",
             "pages": [
               "pages/api-reference/endpoint/billing/auth",
               "pages/api-reference/endpoint/billing/order-count"
@@ -105,6 +98,7 @@
           },
           {
             "group": "Tools",
+            "icon": "pen-ruler",
             "pages": [
               "pages/api-reference/endpoint/tool/open-cash-drawer"
             ]
@@ -152,9 +146,10 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "telegram": "https://t.me/bct_uz",
+      "instagram": "https://www.instagram.com/bctechnologies/",
+      "website": "https://fbox.uz/",
+      "github": "https://github.com/abdullo211/fiscal_document/"
     }
   }
 }
