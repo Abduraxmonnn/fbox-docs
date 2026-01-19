@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "almond",
+  "theme": "aspen",
   "name": "FiscalBox Documentation",
   "colors": {
     "primary": "#DC2626",
@@ -16,9 +16,9 @@
           {
             "group": "Getting started",
             "pages": [
-              "pages/index",
-              "pages/quickstart",
-              "pages/development"
+              "en/index",
+              "en/quickstart",
+              "en/development"
             ]
           }
         ]
@@ -29,16 +29,16 @@
           {
             "group": "API documentation",
             "pages": [
-              "pages/api-reference/introduction"
+              "en/api-reference/introduction"
             ]
           },
           {
             "group": "Order",
             "icon": "receipt",
             "pages": [
-              "pages/api-reference/endpoint/order/create",
-              "pages/api-reference/endpoint/order/refuse",
-              "pages/api-reference/endpoint/order/print"
+              "en/api-reference/endpoint/order/create",
+              "en/api-reference/endpoint/order/refuse",
+              "en/api-reference/endpoint/order/print"
             ]
           },
           {
@@ -46,68 +46,65 @@
             "icon": "money-check-dollar",
             "expanded": false,
             "pages": [
-              "pages/api-reference/openapi/payment/click/index",
-              "pages/api-reference/openapi/payment/click/pass",
-              "pages/api-reference/openapi/payment/click/fiscalization",
-
-              "pages/api-reference/openapi/payment/payme/index",
-              "pages/api-reference/openapi/payment/payme/go",
-              "pages/api-reference/openapi/payment/payme/fiscalization",
-
-              "pages/api-reference/openapi/payment/uzum/index",
-              "pages/api-reference/openapi/payment/uzum/fastpay",
-              "pages/api-reference/openapi/payment/uzum/fiscalization",
-
-              "pages/api-reference/openapi/payment/anor/index",
-              "pages/api-reference/openapi/payment/anor/anorbank",
-              "pages/api-reference/openapi/payment/anor/fiscalization"
+              "en/api-reference/openapi/payment/click/index",
+              "en/api-reference/openapi/payment/click/pass",
+              "en/api-reference/openapi/payment/click/fiscalization",
+              "en/api-reference/openapi/payment/payme/index",
+              "en/api-reference/openapi/payment/payme/go",
+              "en/api-reference/openapi/payment/payme/fiscalization",
+              "en/api-reference/openapi/payment/uzum/index",
+              "en/api-reference/openapi/payment/uzum/fastpay",
+              "en/api-reference/openapi/payment/uzum/fiscalization",
+              "en/api-reference/openapi/payment/anor/index",
+              "en/api-reference/openapi/payment/anor/anorbank",
+              "en/api-reference/openapi/payment/anor/fiscalization"
             ]
           },
           {
             "group": "Z-Report & X-Report",
             "icon": "file-waveform",
             "pages": [
-              "pages/api-reference/endpoint/report/zreport-open",
-              "pages/api-reference/endpoint/report/zreport-close",
-              "pages/api-reference/endpoint/report/zreport-open-print",
-              "pages/api-reference/endpoint/report/zreport-info",
-              "pages/api-reference/endpoint/report/zreport-sverka"
+              "en/api-reference/endpoint/report/zreport-open",
+              "en/api-reference/endpoint/report/zreport-close",
+              "en/api-reference/endpoint/report/zreport-open-print",
+              "en/api-reference/endpoint/report/zreport-info",
+              "en/api-reference/endpoint/report/zreport-sverka"
             ]
           },
           {
             "group": "Info",
             "icon": "circle-info",
             "pages": [
-              "pages/api-reference/endpoint/info/info"
+              "en/api-reference/endpoint/info/info"
             ]
           },
           {
             "group": "Banners",
             "icon": "bullhorn",
             "pages": [
-              "pages/api-reference/endpoint/banner/banner"
+              "en/api-reference/endpoint/banner/banner"
             ]
           },
           {
             "group": "Billing",
             "icon": "chart-pie",
             "pages": [
-              "pages/api-reference/endpoint/billing/auth",
-              "pages/api-reference/endpoint/billing/order-count"
+              "en/api-reference/endpoint/billing/auth",
+              "en/api-reference/endpoint/billing/order-count"
             ]
           },
           {
             "group": "Tools",
             "icon": "pen-ruler",
             "pages": [
-              "pages/api-reference/endpoint/tool/open-cash-drawer"
+              "en/api-reference/endpoint/tool/open-cash-drawer"
             ]
           },
           {
             "group": "Customization",
             "pages": [
-              "pages/essentials/settings",
-              "pages/essentials/navigation"
+              "en/essentials/settings",
+              "en/essentials/navigation"
             ]
           }
         ]
@@ -126,7 +123,48 @@
           "icon": "newspaper"
         }
       ]
-    }
+    },
+    "languages": [
+      {
+        "language": "en",
+        "groups": [
+          {
+            "group": "Documentation",
+            "pages": [
+              "/pages/en/index",
+              "/pages/en/quickstart",
+              "/pages/en/development"
+            ]
+          }
+        ]
+      },
+      {
+        "language": "uz",
+        "groups": [
+          {
+            "group": "Hujjatlar",
+            "pages": [
+              "uz/index",
+              "uz/quickstart",
+              "uz/development"
+            ]
+          }
+        ]
+      },
+      {
+        "language": "ru",
+        "groups": [
+          {
+            "group": "Документация",
+            "pages": [
+              "ru/index",
+              "ru/quickstart",
+              "ru/development"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "logo": {
     "light": "/logo/light.png",
@@ -136,12 +174,8 @@
     "options": [
       "copy",
       "view",
-      "chatgpt",
-      "claude",
-      "perplexity",
-      "mcp",
-      "cursor",
-      "vscode"
+      "vscode",
+      "chatgpt"
     ]
   },
   "footer": {

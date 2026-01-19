@@ -1,0 +1,186 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Click Fiscalization API",
+    "description": "Fiscalization endpoint for Click payments",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://fbox.ngrok.io"
+    }
+  ],
+  "paths": {
+    "/payment/click_confirm": {
+      "post": {
+        "summary": "Fiscalization Click payment",
+        "operationId": "clickFiscalization",
+        "tags": [
+          "Click Fiscalization"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiscalizationRequest"
+              },
+              "example": {
+                "payment_id": "2354512461",
+                "qr_code": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fiscalization successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FiscalizationResponse"
+                },
+                "example": {
+                  "data": {
+                    "inn": null,
+                    "payment_id": null,
+                    "qr_code": null,
+                    "status": "successfully",
+                    "error": null
+                  },
+                  "error": null,
+                  "is_success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 7,
+                    "message": "{\"payment_id\":[\"This field may not be blank.\"]}",
+                    "data": null
+                  },
+                  "is_success": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FiscalizationRequest": {
+        "type": "object",
+        "required": [
+          "payment_id",
+          "qr_code"
+        ],
+        "properties": {
+          "payment_id": {
+            "type": "string",
+            "description": "Unique order identifier received in the /click/pass response and provided by Click.",
+            "example": "2354512461"
+          },
+          "qr_code": {
+            "type": "string",
+            "description": "Link to fiscalization transaction on Soliq",
+            "example": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
+          }
+        }
+      },
+      "FiscalizationResponse": {
+        "type": "object",
+        "required": [
+          "data",
+          "is_success"
+        ],
+        "properties": {
+          "data": {
+            "type": "object",
+            "required": [
+              "status"
+            ],
+            "properties": {
+              "inn": {
+                "type": "string",
+                "nullable": true
+              },
+              "payment_id": {
+                "type": "string",
+                "nullable": true
+              },
+              "qr_code": {
+                "type": "string",
+                "nullable": true
+              },
+              "status": {
+                "type": "string",
+                "example": "successfully"
+              },
+              "error": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": [
+          "is_success"
+        ],
+        "properties": {
+          "data": {
+            "type": "string",
+            "nullable": true,
+            "default": null
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 7
+              },
+              "message": {
+                "type": "string",
+                "example": "{\"payment_id\":[\"This field may not be blank.\"]}"
+              },
+              "data": {
+                "type": "string",
+                "nullable": true,
+                "default": null
+              }
+            }
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }
+    }
+  }
+}
