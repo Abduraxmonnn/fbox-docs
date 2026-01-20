@@ -1,6 +1,52 @@
 ---
 title: Uzum FastPay
-openapi: 'POST /payme/go'
-
-[//]: # (openapi: ./pass.openapi.json)
+description: Initiate payments using Uzum FastPay
+openapi: 'POST /payment/uzum'
 ---
+
+## Overview
+
+The **Uzum FastPay Payment API** is used to initiate a payment through
+Uzum’s FastPay system.
+
+This endpoint creates a payment transaction and returns a `payment_id`
+that must be used later for fiscalization.
+
+---
+
+## Request Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `amount` | integer | ✅ | Payment amount in sums |
+| `qr_code` | string | ✅ | Unique Uzum transaction identifier |
+
+---
+
+## Response Fields
+
+### ✅ Success Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | object | Response payload |
+| `data.payment_id` | string | Unique payment identifier |
+| `data.payment_status` | string | Payment status (`SUCCESS`, `FAILED`, etc.) |
+| `data.error_code` | string | Provider error code (`0` on success) |
+| `data.error_message` | string \| null | Error description (null on success) |
+| `data.client_phone_number` | string | Client phone number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+### 🚫 Error Response `400`
+
+> **Note:** Even server says about error HTTP status code will be `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal error code |
+| `error.message` | string | Human-readable error message |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

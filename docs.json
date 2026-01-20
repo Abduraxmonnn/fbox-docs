@@ -49,15 +49,12 @@
               "pages/api-reference/openapi/payment/click/index",
               "pages/api-reference/openapi/payment/click/pass",
               "pages/api-reference/openapi/payment/click/fiscalization",
-
               "pages/api-reference/openapi/payment/payme/index",
               "pages/api-reference/openapi/payment/payme/go",
               "pages/api-reference/openapi/payment/payme/fiscalization",
-
               "pages/api-reference/openapi/payment/uzum/index",
               "pages/api-reference/openapi/payment/uzum/fastpay",
               "pages/api-reference/openapi/payment/uzum/fiscalization",
-
               "pages/api-reference/openapi/payment/anor/index",
               "pages/api-reference/openapi/payment/anor/anorbank",
               "pages/api-reference/openapi/payment/anor/fiscalization"
@@ -116,14 +113,19 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "New KKM Registration",
+          "href": "https://docs.google.com/forms/d/e/1FAIpQLSdme1n1oaE4Kmo_4kCqfuBAko-2_UmaXu_c14__KeGoXDjy9A/viewform",
+          "icon": "laptop-medical"
         },
         {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
+          "anchor": "Billing System",
+          "href": "https://admin.fbox.uz/",
+          "icon": "pie-chart"
+        },
+        {
+          "anchor": "Observations Test KKM",
+          "href": "http://94.158.54.150:8000/",
+          "icon": "video"
         }
       ]
     }

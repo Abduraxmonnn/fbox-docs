@@ -1,4 +1,64 @@
 ---
-title: 'Fiscalization'
-openapi: 'POST /payment/uzum/fiscal'
+title: Uzum Fiscalization
+description: Fiscalize Uzum FastPay payments
+openapi: 'POST /payment/uzum_confirm'
 ---
+
+## Overview
+
+The **Uzum Fiscalization API** is used to complete (fiscalize) a previously
+initiated Uzum FastPay payment.
+
+This endpoint confirms the payment by attaching a fiscal receipt generated
+by Soliq (OFD).
+
+---
+
+## Request Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `payment_id` | string | ✅ | Unique payment identifier received from Uzum FastPay payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Response Fields
+
+### ✅ Success Response
+
+- **Status code:** `200`
+- **Method:** `POST`
+- **Auth required:** `No`
+- **Content-Type:** `application/json`
+- **Note:** Fiscalization completed successfully
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | object | Response payload |
+| `data.payment_id` | string | Payment identifier |
+| `data.payment_status` | string | Fiscalization status (`SUCCESS`, `FAILED`, etc.) |
+| `data.error_code` | string | Provider error code (`0` on success) |
+| `data.error_message` | string \| null | Error description (null on success) |
+| `data.client_phone_number` | string | Client phone number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Error Response
+
+- **Status code:** `200`
+- **Method:** `POST`
+- **Auth required:** `No`
+- **Content-Type:** `application/json`
+- **Note:** Even in case of validation or processing errors, the API returns HTTP `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | Human-readable error message |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |
