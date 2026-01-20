@@ -27,12 +27,6 @@ by Soliq (OFD).
 
 ### ✅ Success Response
 
-- **Status code:** `200`
-- **Method:** `POST`
-- **Auth required:** `No`
-- **Content-Type:** `application/json`
-- **Note:** Fiscalization completed successfully
-
 | Field | Type | Description |
 |------|------|-------------|
 | `data` | object | Response payload |
@@ -48,11 +42,7 @@ by Soliq (OFD).
 
 ### 🚫 Error Response
 
-- **Status code:** `200`
-- **Method:** `POST`
-- **Auth required:** `No`
-- **Content-Type:** `application/json`
-- **Note:** Even in case of validation or processing errors, the API returns HTTP `200`
+> **Note:** Even if there is a validation error, the server returns HTTP status `200`.
 
 | Field | Type | Description |
 |------|------|-------------|

@@ -1,6 +1,7 @@
 ---
-title: Click
+title: Click Overview
 description: Click payment initiation and fiscalization APIs
+icon: grip-lines
 ---
 
 ## Overview
@@ -14,6 +15,22 @@ The integration is split into two logical stages:
 2. **Fiscalization** – confirms the completed payment and registers it with the tax system.
 
 This separation ensures flexibility, reliability, and compliance with fiscal regulations.
+
+---
+
+## General Setup
+
+All Click endpoints share these common settings:
+
+- **Status code:** `200`/`400`/`500`
+- **Method:** `POST`
+- **Auth required:** `No`
+- **Content-Type:** `application/json`
+
+> **Note:** Even in case of validation, payment, or fiscalization errors, the API returns HTTP `200`.
+
+- Always check `is_success` and `HTTP status code` to determine if the request succeeded.
+- `data` contains the payload on success; `error` contains details on failure.
 
 ---
 

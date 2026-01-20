@@ -1,6 +1,7 @@
 ---
-title: PayMe
+title: PayMe Overview
 description: PayMe payment initiation and fiscalization APIs
+icon: grip-lines
 ---
 
 ## Overview
@@ -14,6 +15,22 @@ The integration is divided into two independent stages:
 2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
 
 This approach ensures reliable payment processing and compliance with fiscal regulations.
+
+---
+
+## General Setup
+
+All Payme endpoints share these common settings:
+
+- **Status code:** `200`/`400`/`500`
+- **Method:** `POST`
+- **Auth required:** `No`
+- **Content-Type:** `application/json`
+
+> **Note:** Even in case of validation, payment, or fiscalization errors, the API returns HTTP `200`.
+
+- Always check `is_success` and `HTTP status code` to determine if the request succeeded.
+- `data` contains the payload on success; `error` contains details on failure.
 
 ---
 

@@ -1,4 +1,52 @@
 ---
-title: 'Payme Fiscalization'
+title: Payme Fiscalization
+description: Fiscalize Payme payments
 openapi: 'POST /payment/payme_confirm'
 ---
+
+## Overview
+
+The **Payme Fiscalization API** is used to complete (fiscalize) a previously
+initiated Payme payment.
+
+This endpoint confirms the payment by attaching a fiscal receipt generated
+by Soliq (OFD).
+
+---
+
+## Request Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `payment_id` | string | ✅ | Unique payment identifier received from Payme payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Response Fields
+
+### ✅ Success Response
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | object | Response payload |
+| `data.id` | integer | Internal fiscalization ID |
+| `data.result.receipt._id` | string | Receipt identifier |
+| `data.result.receipt.create_time` | integer | Receipt creation timestamp (ms) |
+| `data.result.receipt.pay_time` | integer | Payment timestamp (ms) |
+| `data.error` | string \| null | Error description (null on success) |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Error Response
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | Human-readable error message |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |
