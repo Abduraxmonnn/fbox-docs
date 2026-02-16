@@ -42,7 +42,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/PaymentResponse"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/PaymentResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
                 },
                 "example": {
                   "data": {

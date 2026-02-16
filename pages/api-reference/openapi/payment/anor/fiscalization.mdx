@@ -1,4 +1,51 @@
 ---
-title: 'Fiscalization'
-openapi: 'POST /payment/payme/fiscal'
+title: Anor Fiscalization
+description: Fiscalize Anor payments
+openapi: 'POST /payment/anor_confirm'
 ---
+
+## Overview
+
+The **Anor Fiscalization API** is used to complete (fiscalize) a previously
+initiated Anor payment.
+
+This endpoint confirms the payment by attaching a fiscal receipt generated
+by Soliq (OFD).
+
+---
+
+## Request Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `transaction_id` | string | ✅ | Unique transaction (payment) identifier received from Anor payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Response Fields
+
+### ✅ Success Response
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | object | Response payload |
+| `data.message` | string | Human-readable error message by provider |
+| `data.error_code` | integer | error_code provided by Provider |
+| `data.payment_id` | integer | Unique payment identifier received from Anor payment |
+| `data.transaction_id` | string \| null | Unique transaction identifier received from Anor payment |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Error Response
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | Human-readable error message |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

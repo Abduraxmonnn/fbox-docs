@@ -56,7 +56,7 @@
               "pages/api-reference/openapi/payment/uzum/fastpay",
               "pages/api-reference/openapi/payment/uzum/fiscalization",
               "pages/api-reference/openapi/payment/anor/index",
-              "pages/api-reference/openapi/payment/anor/anorbank",
+              "pages/api-reference/openapi/payment/anor/anor",
               "pages/api-reference/openapi/payment/anor/fiscalization"
             ]
           },

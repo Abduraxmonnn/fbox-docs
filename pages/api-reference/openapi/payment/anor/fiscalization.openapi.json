@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Click Fiscalization API",
-    "description": "Fiscalization endpoint for Click payments",
+    "title": "Anor Fiscalization API",
+    "description": "Fiscalization endpoint for Anor payments",
     "version": "1.0.0"
   },
   "servers": [
@@ -11,51 +11,81 @@
     }
   ],
   "paths": {
-    "/payment/click/fiscal": {
+    "/payment/anor_confirm": {
       "post": {
-        "summary": "Fiscalize Click payment",
-        "operationId": "clickFiscalization",
-        "tags": ["Click Payment"],
+        "summary": "Fiscalization Anor payment",
+        "operationId": "anorFiscalization",
+        "tags": [
+          "Anor Fiscalization"
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FiscalizationRequest"
+                "$ref": "#/components/schemas/AnorFiscalizationRequest"
               },
               "example": {
-                "order_id": "ORD-12345",
-                "amount": 150000,
-                "currency": "UZS",
-                "terminal_id": "T-001",
-                "payment_method": "CLICK"
+                "transaction_id": "a12fc00f-5af5-65b8-adf8-74bff44680ee",
+                "qr_code": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Fiscalization successful",
+            "description": "Fiscalization processed (success or error)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FiscalizationResponse"
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/AnorFiscalizationSuccessResponse" },
+                    { "$ref": "#/components/schemas/AnorFiscalizationErrorResponse" }
+                  ]
                 },
-                "example": {
-                  "status": "SUCCESS",
-                  "fiscal_receipt_number": "FR-987654",
-                  "fiscal_sign": "A1B2C3D4",
-                  "created_at": "2026-01-14T10:15:30Z"
+                "examples": {
+                  "success": {
+                    "value": {
+                      "data": {
+                        "message": "Fiscalization completed successfully",
+                        "error_code": 0,
+                        "payment_id": 123456,
+                        "transaction_id": "a12fc00f-5af5-65b8-adf8-74bff44680ee"
+                      },
+                      "error": null,
+                      "is_success": true
+                    }
+                  },
+                  "error": {
+                    "value": {
+                      "data": null,
+                      "error": {
+                        "code": 105,
+                        "message": "Invalid transaction_id",
+                        "data": null
+                      },
+                      "is_success": false
+                    }
+                  }
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid request",
+            "description": "Validation or processing error (may still be returned as 200)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
+                  "$ref": "#/components/schemas/AnorFiscalizationErrorResponse"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 105,
+                    "message": "Transaction not found",
+                    "data": null
+                  },
+                  "is_success": false
                 }
               }
             }
@@ -69,61 +99,89 @@
   },
   "components": {
     "schemas": {
-      "FiscalizationRequest": {
+      "AnorFiscalizationRequest": {
         "type": "object",
-        "required": ["order_id", "amount", "terminal_id"],
+        "required": [
+          "transaction_id",
+          "qr_code"
+        ],
         "properties": {
-          "order_id": {
+          "transaction_id": {
             "type": "string",
-            "description": "Unique order identifier"
+            "description": "Unique transaction identifier received from Anor payment",
+            "example": "a12fc00f-5af5-65b8-adf8-74bff44680ee"
           },
-          "amount": {
-            "type": "integer",
-            "description": "Payment amount in tiyin",
-            "example": 150000
-          },
-          "currency": {
+          "qr_code": {
             "type": "string",
-            "enum": ["UZS"],
-            "default": "UZS"
-          },
-          "terminal_id": {
-            "type": "string",
-            "description": "Fiscal terminal identifier"
-          },
-          "payment_method": {
-            "type": "string",
-            "enum": ["CLICK"]
+            "description": "URL of the fiscal receipt from Soliq (OFD)",
+            "example": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
           }
         }
       },
-      "FiscalizationResponse": {
+      "AnorFiscalizationSuccessResponse": {
         "type": "object",
         "properties": {
-          "status": {
-            "type": "string",
-            "example": "SUCCESS"
+          "data": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Provider message"
+              },
+              "error_code": {
+                "type": "integer",
+                "description": "Error code provided by provider",
+                "example": 0
+              },
+              "payment_id": {
+                "type": "integer",
+                "description": "Unique payment identifier received from Anor payment"
+              },
+              "transaction_id": {
+                "type": "string",
+                "nullable": true,
+                "description": "Unique transaction identifier"
+              }
+            }
           },
-          "fiscal_receipt_number": {
-            "type": "string"
-          },
-          "fiscal_sign": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "properties": {
           "error": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
-          "message": {
-            "type": "string"
+          "is_success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "AnorFiscalizationErrorResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "null",
+            "example": null
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 105
+              },
+              "message": {
+                "type": "string",
+                "example": "Invalid transaction_id"
+              },
+              "data": {
+                "type": "string",
+                "nullable": true,
+                "default": null
+              }
+            }
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": false
           }
         }
       }

@@ -1,0 +1,52 @@
+---
+title: Anor Payment
+description: Initiate payments using Anor
+openapi: 'POST /payment/anor'
+---
+
+## Overview
+
+The **Anor Payment API** is used to initiate a payment through Anor.
+
+This endpoint creates a payment transaction and returns a `payment_id`
+that must be used later for fiscalization.
+
+---
+
+## Request Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `amount` | integer | ✅ | Payment amount in sums |
+| `qr_code` | string | ✅ | Unique Payme transaction identifier |
+
+---
+
+## Response Fields
+
+### ✅ Success Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | object | Response payload |
+| `data.transaction_id` | string | Transaction UUID |
+| `data.status` | string | Payment status (`successfully`, `failed`, etc.) |
+| `data.message` | string | Optional message from provider |
+| `data.error_code` | string | Optional message from provider |
+| `data.payment_id` | string | Unique payment identifier |
+| `data.error_note` | string | Error note |
+| `data.payment_status` | integer | Payment status provided by provider |
+| `data.phone_number` | string | Client phone number |
+| `data.card_number` | string | Client card number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+### 🚫 Error Response `400`
+
+> **Note:** Even if there is a validation error, the server returns HTTP status `200`.
+
+| Field | Type | Description |
+|------|------|-------------|
+| `status` | string | Error status (`successfully`, `error`, etc.) |
+| `message` | string | Human-readable error message |
+| `error_code` | integer | error_code provided by Provider |
