@@ -1,0 +1,27 @@
+---
+title: Open Cash Drawer
+description: Open the cash drawer remotely
+openapi: 'GET /print/open_cash_drawer'
+---
+
+## Overview
+
+The **Open Cash Drawer API** is used to remotely trigger the opening of a
+connected cash drawer.
+
+This endpoint is typically used in POS systems when a manual drawer opening
+is required (for example, cash withdrawal or inspection).
+
+---
+
+## Authorization
+
+🔓 **Authorization is NOT required** for this endpoint.
+
+---
+
+## Notes
+
+- The endpoint performs a hardware-related action
+- A successful request does not return any payload data
+- Errors are returned in a unified error object

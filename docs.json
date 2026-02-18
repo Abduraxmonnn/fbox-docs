@@ -97,7 +97,7 @@
             "group": "Tools",
             "icon": "pen-ruler",
             "pages": [
-              "pages/api-reference/endpoint/tool/open-cash-drawer"
+              "pages/api-reference/endpoint/tool/cash-drawer/open"
             ]
           },
           {
