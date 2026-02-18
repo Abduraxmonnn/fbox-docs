@@ -36,7 +36,7 @@
             "group": "Order",
             "icon": "receipt",
             "pages": [
-              "pages/api-reference/endpoint/order/create",
+              "pages/api-reference/endpoint/order/create/index",
               "pages/api-reference/endpoint/order/refuse",
               "pages/api-reference/endpoint/order/print"
             ]

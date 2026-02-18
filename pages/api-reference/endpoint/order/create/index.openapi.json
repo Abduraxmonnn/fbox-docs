@@ -1,0 +1,367 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Order Create API",
+    "version": "1.0.0",
+    "description": "Create orders, including sales, advance payments, or credit."
+  },
+  "paths": {
+    "/order/create/": {
+      "post": {
+        "summary": "Create an order",
+        "operationId": "createOrder",
+        "tags": [
+          "Order Operations"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderCreateRequest"
+              },
+              "example": {
+                "number": 1,
+                "receipt_type": "order",
+                "products": [
+                  {
+                    "name": "Bread",
+                    "barcode": "4780000000007",
+                    "amount": 1000,
+                    "unit_name": "dona",
+                    "price": 50000,
+                    "product_price": 50000,
+                    "vat": 6000,
+                    "vat_percent": 12,
+                    "discount": 0,
+                    "discount_percent": 0,
+                    "other": 0,
+                    "labels": [
+                      "05367567230048c?eN1(o0029"
+                    ],
+                    "class_code": "02710001005000000",
+                    "package_code": 1282556,
+                    "owner_type": 1,
+                    "comission_info": {
+                      "inn": "123456789",
+                      "pinfl": "12345678912345"
+                    }
+                  }
+                ],
+                "uuid": "123",
+                "time": "2021-04-07 12:52:02",
+                "cashier": "Admin",
+                "received_cash": 50000,
+                "change": 0,
+                "received_card": 0,
+                "card_type": 2,
+                "ppt_id": "123456789012",
+                "scan2pay_paid": true,
+                "extra_info": {
+                  "phone_number": "998911234569",
+                  "qr_payment_id": "123456789id12",
+                  "qr_payment_provider": "0141",
+                  "scan2pay_id": "59bcc56b-1fcf-4752-9f5b-a3fffdf525ae",
+                  "card_number": "1234********1234"
+                },
+                "open_cashbox": true,
+                "send_email": true,
+                "email": "abdullo21113@gmail.com",
+                "sms_phone_number": "+998909999999",
+                "banners": [
+                  {
+                    "type": "text",
+                    "data": "Discount code for next purchase",
+                    "style": {
+                      "font_width": 2,
+                      "font_height": 100,
+                      "is_bold": true
+                    }
+                  },
+                  {
+                    "type": "barcode",
+                    "data": "23423423",
+                    "style": {
+                      "font_width": 2,
+                      "font_height": 100,
+                      "is_bold": true
+                    }
+                  }
+                ],
+                "prices": [
+                  {
+                    "name": "PayMe",
+                    "price": 100000,
+                    "vat_type": "QQS",
+                    "vat_price": 200000
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderCreateResponse"
+                },
+                "example": {
+                  "data": {
+                    "terminal_id": "UZ170703100189",
+                    "receipt_count": 643,
+                    "date_time": "20200518221403",
+                    "fiscal_sign": "248429044289",
+                    "applet_version": "0300",
+                    "qr_url": "https://ofd.soliq.uz/check?t=UZ170703100189&r=643&c=20200518221403&s=248429044289",
+                    "cash_box_number": "01"
+                  },
+                  "error": null,
+                  "is_success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to create order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 101,
+                    "message": "Printer not working",
+                    "data": null
+                  },
+                  "is_success": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "OrderCreateRequest": {
+        "type": "object",
+        "required": [
+          "number",
+          "receipt_type",
+          "products",
+          "time",
+          "cashier",
+          "received_cash",
+          "change",
+          "received_card",
+          "card_type",
+          "ppt_id"
+        ],
+        "properties": {
+          "number": {
+            "type": "integer"
+          },
+          "receipt_type": {
+            "type": "string"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "barcode",
+                "amount",
+                "unit_name",
+                "price",
+                "product_price",
+                "vat",
+                "vat_percent",
+                "discount",
+                "discount_percent",
+                "other",
+                "labels",
+                "class_code",
+                "package_code",
+                "owner_type",
+                "comission_info"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "barcode": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "integer"
+                },
+                "unit_name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer"
+                },
+                "product_price": {
+                  "type": "integer"
+                },
+                "vat": {
+                  "type": "integer"
+                },
+                "vat_percent": {
+                  "type": "integer"
+                },
+                "discount": {
+                  "type": "integer"
+                },
+                "discount_percent": {
+                  "type": "integer"
+                },
+                "other": {
+                  "type": "integer"
+                },
+                "labels": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "class_code": {
+                  "type": "string"
+                },
+                "package_code": {
+                  "type": "integer"
+                },
+                "owner_type": {
+                  "type": "integer"
+                },
+                "comission_info": {
+                  "type": "object",
+                  "properties": {
+                    "inn": {
+                      "type": "string"
+                    },
+                    "pinfl": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "uuid": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          },
+          "cashier": {
+            "type": "string"
+          },
+          "received_cash": {
+            "type": "integer"
+          },
+          "change": {
+            "type": "integer"
+          },
+          "received_card": {
+            "type": "integer"
+          },
+          "card_type": {
+            "type": "integer"
+          },
+          "ppt_id": {
+            "type": "string"
+          },
+          "scan2pay_paid": {
+            "type": "boolean"
+          },
+          "extra_info": {
+            "type": "object",
+            "properties": {
+              "phone_number": {
+                "type": "string"
+              },
+              "qr_payment_id": {
+                "type": "string"
+              },
+              "qr_payment_provider": {
+                "type": "string"
+              },
+              "scan2pay_id": {
+                "type": "string"
+              },
+              "card_number": {
+                "type": "string"
+              }
+            }
+          },
+          "open_cashbox": {
+            "type": "boolean"
+          },
+          "send_email": {
+            "type": "boolean"
+          },
+          "email": {
+            "type": "string"
+          },
+          "sms_phone_number": {
+            "type": "string"
+          },
+          "banners": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "prices": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "OrderCreateResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object"
+          },
+          "error": {
+            "type": [
+              "object",
+              "null"
+            ]
+          },
+          "is_success": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "error": {
+            "type": "object"
+          },
+          "is_success": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}
