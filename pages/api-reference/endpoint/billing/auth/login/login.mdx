@@ -1,0 +1,57 @@
+---
+title: Authorization
+description: Authenticate user and obtain access token
+openapi: 'POST /api/v1/login/'
+---
+
+## Overview
+
+The **Billing Login API** is used to authenticate a user in the billing system.
+
+This endpoint verifies user credentials and returns an authentication
+`token` that must be used to access protected billing APIs.
+
+> **Note:** This endpoint is public and does **not** require prior authorization.
+
+---
+
+[//]: # (## Usage Notes)
+
+[//]: # ()
+[//]: # (- This endpoint is publicly accessible)
+
+[//]: # (- Valid credentials are required to obtain an access token)
+
+[//]: # (- Invalid credentials will result in an authentication error)
+
+[//]: # (- The returned token is required for protected Billing API endpoints)
+
+[//]: # ()
+[//]: # (---)
+
+## Request Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `username` | string | ✅ | User login |
+| `password` | string | ✅ | User password |
+
+---
+
+## Response Fields
+
+### ✅ Success Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `token` | string | Access token used for authorized requests |
+
+---
+
+### 🚫 Error Response `400`
+
+> **Note:** In case of invalid credentials or validation errors.
+
+| Field | Type | Description |
+|------|------|-------------|
+| `error` | string | Human-readable error message |

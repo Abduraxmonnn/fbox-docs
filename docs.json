@@ -89,8 +89,8 @@
             "group": "Billing",
             "icon": "chart-pie",
             "pages": [
-              "pages/api-reference/endpoint/billing/auth",
-              "pages/api-reference/endpoint/billing/order-count"
+              "pages/api-reference/endpoint/billing/auth/login/login",
+              "pages/api-reference/endpoint/billing/order-count/order-count"
             ]
           },
           {

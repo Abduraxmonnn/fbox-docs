@@ -1,0 +1,63 @@
+---
+title: Orders Count
+description: Retrieve sales statistics for orders
+openapi: 'GET /api/v1/orders/count/'
+---
+
+## Overview
+
+The **Orders Count API** is used to retrieve aggregated sales information
+for a specific company within a selected time period.
+
+This endpoint returns the total number of orders and the total sales amount
+based on the provided filters.
+
+---
+
+## Authorization
+
+This endpoint **requires authentication**.
+
+**Header:**
+
+Authorization: Token `<token_value>`
+
+
+The token must be prefixed with the word `Token` followed by a space.
+
+---
+
+## Query Parameters
+
+| Parameter | Type | Required | Description |
+|---------|------|----------|-------------|
+| `start_date` | string | ✅ | Start date in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`). The `T` between date and time is mandatory |
+| `end_date` | string | ✅ | End date in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`). The `T` between date and time is mandatory |
+| `inn` | string | ✅ | Company INN (Tax Identification Number) |
+
+---
+
+## Response Fields
+
+### ✅ Success Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `status` | string | Request status (`successfully`) |
+| `filters` | object | Applied filters |
+| `filters.start_date` | string | Start date |
+| `filters.end_date` | string | End date |
+| `filters.inn` | string | Company INN |
+| `data` | object | Aggregated sales data |
+| `data.company_name` | string | Company name |
+| `data.total_orders` | integer | Total number of orders |
+| `data.total_amount` | number | Total sales amount |
+
+---
+
+### 🚫 Error Response `400`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `status` | string | Error status |
+| `message` | string | Human-readable error message |
