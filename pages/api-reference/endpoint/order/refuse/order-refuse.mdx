@@ -1,0 +1,118 @@
+---
+title: Order Refuse
+description: Refuse (refund) an existing order
+openapi: 'POST /order/refuse'
+---
+
+## Overview
+
+The **Order Refuse API** is used to perform a refund operation for an existing order.
+
+This endpoint registers a fiscal refund, recalculates product totals,
+and returns fiscal information such as receipt number and QR code.
+
+Authorization is **not required**.
+
+---
+
+## Request Fields
+
+### General Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `number` | integer | ✅ | Order number or ID |
+| `uuid` | string | ❌ | Unique request identifier |
+| `qr_code` | string | ❌ | Link to original receipt |
+| `time` | string | ✅ | Time in format `yyyy-MM-dd HH:mm:ss` |
+| `cashier` | string | ✅ | Cashier name |
+| `received_cash` | integer | ❌ | Received cash amount ×100 |
+| `change` | integer | ❌ | Change amount ×100 |
+| `received_card` | integer | ❌ | Received card amount ×100 |
+| `card_type` | integer | ❌ | Card type identifier |
+| `ppt_id` | string | ❌ | POS terminal ID |
+| `send_email` | boolean | ❌ | Send receipt by email |
+| `email` | string | ❌ | Email for receipt |
+| `sms_phone_number` | string | ❌ | Phone number for SMS receipt |
+
+---
+
+### Products
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `name` | string | ✅ | Product name |
+| `barcode` | string | ✅ | Product barcode |
+| `amount` | integer | ✅ | Quantity ×1000 |
+| `unit_name` | string | ✅ | Unit name |
+| `price` | integer | ✅ | Total price |
+| `product_price` | number | ✅ | Unit price ×100 |
+| `vat` | number | ❌ | VAT amount ×100 |
+| `vat_percent` | number | ❌ | VAT percent |
+| `discount` | number | ❌ | Discount amount ×100 |
+| `discount_percent` | number | ❌ | Discount percent |
+| `other` | number | ❌ | Other discounts ×100 |
+| `class_code` | string | ❌ | Product class code |
+| `labels` | array | ❌ | Marking codes |
+| `package_code` | integer | ❌ | Package code |
+| `owner_type` | integer | ❌ | Owner type |
+
+---
+
+### Extra Info
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `phone_number` | string | ❌ | Client phone number |
+| `qr_payment_id` | string | ❌ | QR payment ID |
+| `qr_payment_provider` | string | ❌ | QR payment provider |
+
+---
+
+### Prices
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `name` | string | ✅ | Payment method name |
+| `price` | integer | ✅ | Amount ×100 |
+| `vat_type` | string | ❌ | VAT type |
+| `vat_price` | integer | ❌ | VAT amount ×100 |
+
+---
+
+## Response Fields
+
+### ✅ Success Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data.terminal_id` | string | Terminal ID |
+| `data.receipt_count` | integer | Receipt count (Z-report) |
+| `data.date_time` | string | Fiscal date-time |
+| `data.fiscal_sign` | string | Fiscal sign |
+| `data.applet_version` | string | Applet version |
+| `data.qr_url` | string | QR code URL |
+| `data.cash_box_number` | string | Cash box number |
+| `error` | null | Always `null` |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Error Response
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data |
+| `error.code` | integer | Error code |
+| `error.message` | string | Error message |
+| `error.data` | string \| null | Extra error info |
+| `is_success` | boolean | Always `false` |
+
+---
+
+### Common Error Codes
+
+| Code | Description |
+|-----|------------|
+| `65275` | Refund info is not valid |
+| `102` | Fiscal module not initialized |

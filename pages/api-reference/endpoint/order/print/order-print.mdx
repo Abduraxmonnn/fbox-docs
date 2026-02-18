@@ -1,0 +1,46 @@
+---
+title: Order Print
+description: Print a copy of the last order receipt
+openapi: 'GET /order/print'
+---
+
+## Overview
+
+The **Order Print API** is used to print a copy of the **last fiscal receipt**.
+
+This operation sends a command to the fiscal printer to reprint
+the most recent order without creating a new transaction.
+
+Authorization is **not required**.
+
+---
+
+## Response Fields
+
+### ✅ Success Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | null | Always `null` |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Error Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error.code` | integer | Error code |
+| `error.message` | string | Error description |
+| `error.data` | any \| null | Additional error data |
+| `is_success` | boolean | Always `false` |
+
+---
+
+### Common Error Codes
+
+| Code | Description |
+|-----|------------|
+| `101` | Printer not working |
