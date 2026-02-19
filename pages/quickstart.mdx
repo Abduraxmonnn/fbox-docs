@@ -1,80 +1,82 @@
 ---
 title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+description: "Fast start for FiscalBox integration and docs usage"
 ---
 
-## Get started in three steps
+## Integration In 5 Steps
 
-Get your documentation site running locally and make your first customization.
+<Steps>
+  <Step title="Prepare credentials and environment">
 
-### Step 1: Set up your local environment
+  Collect API base URL, terminal/device details, and any provider-specific identifiers needed by your payment flow.
 
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
-    
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
-    
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
+  </Step>
 
-### Step 2: Deploy your changes
+  <Step title="Start with Order Create">
 
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
-    
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+  Use `POST /order/create/` as the first integration point:
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+  - Build required product and payment fields
+  - Send receipt metadata (`time`, `cashier`, etc.)
+  - Store fiscal response values (`terminal_id`, `receipt_count`, `fiscal_sign`, `qr_url`)
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+  Page: [Order Create](/api-reference/endpoint/order/create/order-create)
 
-### Step 3: Go live
+  </Step>
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+  <Step title="Connect payment provider endpoints">
 
-## Next steps
+  If needed, connect provider-specific routes:
 
-Now that you have your docs running, explore these key features:
+  - Click: [docs](/api-reference/endpoint/payment/click/index)
+  - Payme: [docs](/api-reference/endpoint/payment/payme/index)
+  - Uzum: [docs](/api-reference/endpoint/payment/uzum/index)
+  - Anor: [docs](/api-reference/endpoint/payment/anor/index)
+
+  </Step>
+
+  <Step title="Add reporting and operations">
+
+  Integrate report/tool operations required by your business process:
+
+  - Z-report open/close/print/info/sverka
+  - Cash drawer open
+  - Info and banner endpoints
+
+  </Step>
+
+  <Step title="Verify end-to-end flow">
+
+  Validate success and error scenarios:
+
+  - order success with fiscal response
+  - printer/device failure handling
+  - provider rejection and retry behavior
+  - report close sequence at end of day
+
+  </Step>
+</Steps>
+
+## Quick Navigation
 
 <CardGroup cols={2}>
+  <Card title="API Introduction" icon="book" href="/api-reference/introduction">
+    API structure and usage model.
+  </Card>
 
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
+  <Card title="Billing Auth" icon="key" href="/api-reference/endpoint/billing/auth/login/login">
+    Get token for billing APIs.
+  </Card>
 
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
+  <Card title="Z-Report Open" icon="file-waveform" href="/api-reference/endpoint/report/zreport-open">
+    Begin reporting workflow.
+  </Card>
 
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card title="Cash Drawer" icon="cash-register" href="/api-reference/endpoint/tool/cash-drawer/open">
+    Device operation endpoint.
+  </Card>
 </CardGroup>
 
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>
+<Warning>
+  Keep field units exactly as documented (for example values multiplied by `100` or `1000` where required) to avoid fiscal validation errors.
+</Warning>

@@ -46,18 +46,18 @@
             "icon": "money-check-dollar",
             "expanded": false,
             "pages": [
-              "pages/api-reference/openapi/payment/click/index",
-              "pages/api-reference/openapi/payment/click/pass",
-              "pages/api-reference/openapi/payment/click/fiscalization",
-              "pages/api-reference/openapi/payment/payme/index",
-              "pages/api-reference/openapi/payment/payme/go",
-              "pages/api-reference/openapi/payment/payme/fiscalization",
-              "pages/api-reference/openapi/payment/uzum/index",
-              "pages/api-reference/openapi/payment/uzum/fastpay",
-              "pages/api-reference/openapi/payment/uzum/fiscalization",
-              "pages/api-reference/openapi/payment/anor/index",
-              "pages/api-reference/openapi/payment/anor/anor",
-              "pages/api-reference/openapi/payment/anor/fiscalization"
+              "pages/api-reference/endpoint/payment/click/index",
+              "pages/api-reference/endpoint/payment/click/pass",
+              "pages/api-reference/endpoint/payment/click/fiscalization",
+              "pages/api-reference/endpoint/payment/payme/index",
+              "pages/api-reference/endpoint/payment/payme/go",
+              "pages/api-reference/endpoint/payment/payme/fiscalization",
+              "pages/api-reference/endpoint/payment/uzum/index",
+              "pages/api-reference/endpoint/payment/uzum/fastpay",
+              "pages/api-reference/endpoint/payment/uzum/fiscalization",
+              "pages/api-reference/endpoint/payment/anor/index",
+              "pages/api-reference/endpoint/payment/anor/anor",
+              "pages/api-reference/endpoint/payment/anor/fiscalization"
             ]
           },
           {

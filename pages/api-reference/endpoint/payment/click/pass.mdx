@@ -1,0 +1,54 @@
+---
+title: Click Pass
+description: Initiate payments using Click
+openapi: 'POST /payment/click'
+---
+
+## Overview
+
+The **Click Payment API** is used to initiate a payment through Click.
+
+This endpoint creates a payment transaction and returns a `payment_id`
+that must be used later for fiscalization.
+
+---
+
+## Request Fields
+
+| Field | Type | Required | Description |
+|------|------|----------|-------------|
+| `amount` | integer | ✅ | Payment amount in sums |
+| `qr_code` | string | ✅ | Unique Click transaction identifier |
+
+---
+
+## Response Fields
+
+### ✅ Success Response `200`
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | object | Response payload |
+| `data.status_code` | integer | Status code of payment (0 = success) |
+| `data.status` | string | Payment status (`successfully`, `failed`, etc.) |
+| `data.message` | string \| null | Optional message from provider |
+| `data.amount` | integer | Payment amount in sums |
+| `data.payment_id` | string | Unique payment identifier |
+| `data.transaction_id` | string | Transaction UUID |
+| `data.qr_code` | string \| null | QR code if provided |
+| `data.client_phone_number` | string | Client phone number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+### 🚫 Error Response `400`
+
+> **Note:** Even if there is a validation error, the server returns HTTP status `200`.
+
+| Field | Type | Description |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal error code |
+| `error.message` | string | Human-readable error message |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

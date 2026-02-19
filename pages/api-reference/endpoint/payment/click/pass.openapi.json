@@ -1,0 +1,197 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Click Pass API",
+    "description": "Payment endpoint for Click payments",
+    "license": {
+      "name": "MIT",
+      "identifier": ""
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://fbox.ngrok.io"
+    }
+  ],
+  "paths": {
+    "/payment/click": {
+      "post": {
+        "summary": "Click Pass payment",
+        "operationId": "clickPassPayment",
+        "tags": [
+          "Click Pass Payment"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentRequest"
+              },
+              "example": {
+                "amount": 1000,
+                "qr_code": "test"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponse"
+                },
+                "example": {
+                  "data": {
+                    "status_code": 0,
+                    "status": "successfully",
+                    "message": "",
+                    "amount": 0,
+                    "payment_id": "4710103925",
+                    "transaction_id": "3dbec60e-df7d-4c14-929a-8d79b499f7cb",
+                    "qr_code": null,
+                    "client_phone_number": "998712565009"
+                  },
+                  "error": null,
+                  "is_success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error400Response"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 7,
+                    "message": "{\"payment_id\":[\"This field may not be blank.\"]}",
+                    "data": null
+                  },
+                  "is_success": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PaymentRequest": {
+        "type": "object",
+        "required": [
+          "amount",
+          "qr_code"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "Payment amount in sums",
+            "example": 1000
+          },
+          "qr_code": {
+            "type": "string",
+            "description": "Unique transaction identifier"
+          }
+        }
+      },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "status_code": {
+                "type": "integer",
+                "nullable": false
+              },
+              "status": {
+                "type": "string",
+                "nullable": false,
+                "example": "successfully"
+              },
+              "message": {
+                "type": "string",
+                "nullable": true
+              },
+              "amount": {
+                "type": "integer"
+              },
+              "payment_id": {
+                "type": "string",
+                "nullable": false
+              },
+              "transaction_id": {
+                "type": "string",
+                "nullable": false,
+                "example": "3dbec60e-df7d-4c14-929a-8d79b499f7cb"
+              },
+              "qr_code": {
+                "type": "string",
+                "nullable": true,
+                "example": null
+              },
+              "client_phone_number": {
+                "type": "string",
+                "nullable": true,
+                "example": "998712565009"
+              }
+            }
+          },
+          "error": {
+            "type": "string",
+            "nullable": true
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Error400Response": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "nullable": true,
+            "default": null
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 7
+              },
+              "message": {
+                "type": "string",
+                "example": "{\"payment_id\":[\"This field may not be blank.\"]}"
+              },
+              "data": {
+                "type": "string",
+                "nullable": true,
+                "default": null
+              }
+            }
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }
+    }
+  }
+}

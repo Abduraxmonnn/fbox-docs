@@ -1,0 +1,80 @@
+---
+title: PayMe Overview
+description: PayMe payment initiation and fiscalization APIs
+icon: grip-lines
+---
+
+## Overview
+
+The **PayMe API** provides a full payment processing workflow using PayMe,
+covering both **payment initiation** and **fiscalization**.
+
+The integration is divided into two independent stages:
+
+1. **PayMe Go** – initiates a PayMe payment using an amount and QR code.
+2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
+
+This approach ensures reliable payment processing and compliance with fiscal regulations.
+
+---
+
+## General Setup
+
+All Payme endpoints share these common settings:
+
+- **Status code:** `200`/`400`/`500`
+- **Method:** `POST`
+- **Auth required:** `No`
+- **Content-Type:** `application/json`
+
+> **Note:** Even in case of validation, payment, or fiscalization errors, the API returns HTTP `200`.
+
+- Always check `is_success` and `HTTP status code` to determine if the request succeeded.
+- `data` contains the payload on success; `error` contains details on failure.
+
+---
+
+## Payment Flow
+
+A typical PayMe payment flow consists of the following steps:
+
+1. The client initiates a payment via the **PayMe Go API**
+2. PayMe processes the payment and returns a unique `payment_id`
+3. After successful payment, the transaction is sent for **fiscalization**
+4. A fiscal receipt is generated and registered in the Soliq system
+
+Each step is handled by a dedicated endpoint.
+
+---
+
+## PayMe APIs
+
+Explore the PayMe endpoints below to integrate payment and fiscalization
+into your system.
+
+<Columns cols={2}>
+    <Card
+        title="PayMe Go"
+        icon="credit-card"
+        href="payme/go"
+    >
+        Initiate PayMe payments by providing the payment amount and QR code.
+        Returns a payment identifier used for further fiscal processing.
+    </Card>
+
+    <Card
+        title="Fiscalization"
+        icon="receipt"
+        href="payme/fiscalization"
+    >
+        Fiscalize completed PayMe payments and generate official fiscal receipts.
+    </Card>
+</Columns>
+
+---
+
+## Environment
+
+The PayMe APIs are available in the following environments:
+
+- **Payment API**

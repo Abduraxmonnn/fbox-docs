@@ -1,97 +1,86 @@
 ---
 title: "Introduction"
-description: "Welcome to the new home for your documentation"
+description: "Integration and API guides for FiscalBox fiscalization and billing"
 ---
 
-## Setting up
+## Overview
 
-Get your documentation site up and running in minutes.
+FiscalBox documentation contains everything needed to connect POS systems with fiscalization, payment, reporting, and billing endpoints.
 
-<Card
-  title="Start here"
-  icon="rocket"
-  href="pages/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
+<Frame>
+    <img src="/images/fbox_wp.jpg"
+         alt="FiscalBox WP"
+         style={{borderRadius: '0.5rem'}}/>
+</Frame>
 
-## Make it yours
+<Info>
+    This project includes practical endpoint guides for:
+    - Order operations
+    - Payment providers (Click, Payme, Uzum, Anor)
+    - Reports (Z-report and related operations)
+    - Billing and utility tools
+</Info>
 
-Design a docs site that looks great and empowers your users.
+## Start Here
 
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="pages/development"
-  >
-    Edit your docs locally and preview them in real time.
-  </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="pages/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
-  </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="pages/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
-  </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="pages/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
-  </Card>
-</Columns>
+<CardGroup cols={2}>
+    <Card title="Quickstart" icon="rocket" href="/quickstart">
+        Set up your first end-to-end integration flow.
+    </Card>
 
-## Create beautiful pages
+    <Card title="Development" icon="screwdriver-wrench" href="/development">
+        Run docs locally and keep pages aligned with API changes.
+    </Card>
 
-Everything you need to create world-class documentation.
+    <Card title="API Introduction" icon="book" href="/api-reference/introduction">
+        Read structure, auth notes, and endpoint categories.
+    </Card>
+
+    <Card title="Order Create" icon="receipt" href="/api-reference/endpoint/order/create/order-create">
+        Start with the core endpoint used in most integrations.
+    </Card>
+</CardGroup>
+
+## API Sections
+
+Here's how FiscalBox interacts with different systems.
+<Frame>
+    <img src="/images/fbox_workflow.png"
+         alt="FiscalBox workflow"
+         style={{borderRadius: '0.5rem'}}/>
+</Frame>
 
 <Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="pages/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="pages/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="pages/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="pages/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
+    <Card title="Order" icon="receipt" href="/api-reference/endpoint/order/create/order-create">
+        Create, print, and refuse receipts.
+    </Card>
+
+    <Card title="Payment" icon="money-check-dollar" href="/api-reference/endpoint/payment/click/index">
+        Provider-specific payment flows and fiscalization.
+    </Card>
+
+    <Card title="Reports" icon="file-waveform" href="/api-reference/endpoint/report/zreport-open">
+        Open, close, print, and reconcile Z-report data.
+    </Card>
+
+    <Card title="Billing" icon="chart-pie" href="/api-reference/endpoint/billing/auth/login/login">
+        Authentication and billing-related operations.
+    </Card>
 </Columns>
 
-## Need inspiration?
+## External Resources
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<CardGroup cols={3}>
+    <Card title="New KKM Registration" icon="laptop-medical"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdme1n1oaE4Kmo_4kCqfuBAko-2_UmaXu_c14__KeGoXDjy9A/viewform">
+        Register a new fiscal device.
+    </Card>
+
+    <Card title="Billing System" icon="pie-chart" href="https://admin.fbox.uz/">
+        Access billing admin panel.
+    </Card>
+
+    <Card title="Observation Test KKM" icon="video" href="http://94.158.54.150:8000/">
+        Open test observation dashboard.
+    </Card>
+</CardGroup>

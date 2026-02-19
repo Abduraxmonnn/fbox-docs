@@ -1,94 +1,119 @@
 ---
-title: 'Development'
-description: 'Preview changes locally to update your docs'
+title: "Development"
+description: "Integration workflow for FiscalBox APIs"
 ---
 
-<Info>
-  **Prerequisites**:
-  - Node.js version 19 or higher
-  - A docs repository with a `docs.json` file
-</Info>
+## Integration Scope
 
-Follow these steps to install and run Mintlify on your operating system.
+FiscalBox integration usually includes these blocks:
+
+- Order lifecycle (`create`, `print`, `refuse`)
+- Payment provider flow (Click, Payme, Uzum, Anor)
+- Reporting flow (Z-report open/close/print/info/sverka)
+- Device/tool operations (cash drawer, info, banners)
+
+## Prerequisites
+
+- Fiscal device/terminal access
+- API base URL for your environment
+- Billing credentials (for billing endpoints)
+- Clear mapping between POS fields and FiscalBox request fields
+
+## Recommended Integration Order
 
 <Steps>
-<Step title="Install the Mintlify CLI">
+  <Step title="Authenticate where required">
 
-```bash
-npm i -g mint
-```
-</Step>
+  Use billing auth first when integrating billing-protected APIs:
+  - [Billing Login](/api-reference/endpoint/billing/auth/login/login)
 
-<Step title="Preview locally">
+  Store and rotate tokens according to your backend security policy.
 
-Navigate to your docs directory where your `docs.json` file is located, and run the following command:
+  </Step>
 
-```bash
-mint dev
-```
+  <Step title="Implement Order Create as core transaction">
 
-A local preview of your documentation will be available at `http://localhost:3000`.
+  Start from:
+  - [Order Create](/api-reference/endpoint/order/create/order-create)
 
-</Step>
+  Validate required fields, numeric units, and response persistence (`receipt_count`, `fiscal_sign`, `qr_url`).
+
+  </Step>
+
+  <Step title="Add payment provider-specific routes">
+
+  Integrate only providers you use in production:
+  - [Click](/api-reference/endpoint/payment/click/index)
+  - [Payme](/api-reference/endpoint/payment/payme/index)
+  - [Uzum](/api-reference/endpoint/payment/uzum/index)
+  - [Anor](/api-reference/endpoint/payment/anor/index)
+
+  Keep provider-specific `extra_info` rules isolated in adapter logic.
+
+  </Step>
+
+  <Step title="Implement reporting and daily closing logic">
+
+  Add report endpoints into end-of-day operations:
+  - [Z-Report Open](/api-reference/endpoint/report/zreport-open)
+  - [Z-Report Close](/api-reference/endpoint/report/zreport-close)
+  - Related print/info/sverka endpoints
+
+  </Step>
+
+  <Step title="Handle operational endpoints">
+
+  Add operational capabilities where needed:
+  - [Open Cash Drawer](/api-reference/endpoint/tool/cash-drawer/open)
+  - [Info](/api-reference/endpoint/info/info)
+  - [Banner](/api-reference/endpoint/banner/banner)
+
+  </Step>
+
+  <Step title="Harden for production">
+
+  Add:
+  - Request/response audit logging
+  - Idempotency strategy for retry safety
+  - Timeout and retry policy per endpoint type
+  - Monitoring for fiscal errors and printer/device failures
+
+  </Step>
 </Steps>
 
-## Custom ports
+## Data Mapping Checklist
 
-By default, Mintlify uses port 3000. You can customize the port Mintlify runs on by using the `--port` flag. For example, to run Mintlify on port 3333, use this command:
+- Confirm all monetary/scaled values match expected units (for example `*100`, `*1000` fields).
+- Ensure mandatory product metadata is always present (`barcode`, `class_code`, `package_code`, etc.).
+- Validate optional fields that become required for specific payment methods.
+- Preserve fiscal response fields for reconciliation and support operations.
 
-```bash
-mint dev --port 3333
-```
+## Testing Strategy
 
-If you attempt to run Mintlify on a port that's already in use, it will use the next available port:
+1. Use sandbox/test devices for integration tests.
+2. Cover both success and error payloads for each critical endpoint.
+3. Run end-to-end test for a full day cycle: open -> sales -> close.
+4. Verify receipt printing and QR links with real device conditions.
 
-```md
-Port 3000 is already in use. Trying 3001 instead.
-```
+## Production Readiness
 
-## Mintlify versions
+- Use server-side secure token storage.
+- Avoid sending duplicate fiscal operations without idempotency keys/checks.
+- Maintain structured logs for request IDs and fiscal response identifiers.
+- Define fallback UX for temporary API or device failures.
 
-Please note that each CLI release is associated with a specific version of Mintlify. If your local preview does not align with the production version, please update the CLI:
-
-```bash
-npm mint update
-```
-
-## Validating links
-
-The CLI can assist with validating links in your documentation. To identify any broken links, use the following command:
-
-```bash
-mint broken-links
-```
-
-## Deployment
-
-If the deployment is successful, you should see the following:
-
-<Frame>
-  <img src="/images/checks-passed.png" alt="Screenshot of a deployment confirmation message that says All checks have passed." style={{ borderRadius: '0.5rem' }} />
-</Frame>
-
-## Code formatting
-
-We suggest using extensions on your IDE to recognize and format MDX. If you're a VSCode user, consider the [MDX VSCode extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx) for syntax highlighting, and [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for code formatting.
-
-## Troubleshooting
+## Common Integration Risks
 
 <AccordionGroup>
-  <Accordion title='Error: Could not load the "sharp" module using the darwin-arm64 runtime'>
-
-    This may be due to an outdated version of node. Try the following:
-    1. Remove the currently-installed version of the CLI: `npm remove -g mint`
-    2. Upgrade to Node v19 or higher.
-    3. Reinstall the CLI: `npm i -g mint`
+  <Accordion title="Scaled amount mismatch">
+    Values sent in wrong unit scale lead to invalid totals or fiscal rejection. Centralize conversion rules in one service/module.
   </Accordion>
 
-  <Accordion title="Issue: Encountering an unknown error">
-  
-    Solution: Go to the root of your device and delete the `~/.mintlify` folder. Then run `mint dev` again.
+  <Accordion title="Provider-specific field errors">
+    Payment providers can require extra fields depending on flow. Validate provider payloads before request dispatch.
+  </Accordion>
+
+  <Accordion title="Duplicate fiscal operations on retries">
+    Network retries without idempotency checks may create duplicated operations. Add retry guards and request tracing.
   </Accordion>
 </AccordionGroup>
-
-Curious about what changed in the latest CLI version? Check out the [CLI changelog](https://www.npmjs.com/package/mintlify?activeTab=versions).
