@@ -1,0 +1,32 @@
+---
+title: 'Kirish'
+description: "API tuzilmasi va ishlash tamoyillari haqida qisqacha ma'lumot"
+---
+
+<Note>
+  Ushbu bo'lim FiscalBox API umumiy ko'rinishi va OpenAPI spetsifikatsiya havolasini beradi.
+</Note>
+
+## Xush kelibsiz
+
+API hujjatlarini ikki usulda yuritish mumkin: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) va [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). Ushbu loyihada OpenAPI spetsifikatsiyasidan foydalanilgan.
+
+<Card
+  title="FiscalBox Endpoints"
+  icon="leaf"
+  href="https://github.com/abdullo211/fiscal_document/blob/main/pages/api-reference/openapi.json"
+>
+  OpenAPI spetsifikatsiya faylini ochish
+</Card>
+
+## Avtorizatsiya
+
+Himoyalangan endpointlar uchun so'rov sarlavhasida token yuboring.
+
+```json
+"security": [
+  {
+    "bearerAuth": []
+  }
+]
+```

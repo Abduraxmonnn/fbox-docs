@@ -1,0 +1,54 @@
+---
+title: Uzum fiskalizatsiyasi
+description: Uzum FastPay to'lovlarini fiskalizatsiya qilish
+openapi: 'POST /payment/uzum_confirm'
+---
+
+## Umumiy ko'rinish
+
+**Uzum Fiscalization API** avval boshlangan to'lovni yakunlash (fiskalizatsiya) uchun ishlatiladi
+initiated Uzum FastPay payment.
+
+Bu endpoint to'lovni tasdiqlaydi va Soliq (OFD) tomonidan yaratilgan fiskal chekni biriktiradi
+by Soliq (OFD).
+
+---
+
+## So'rov maydonlari
+
+| Maydon | Turi | Majburiy | Tavsif |
+|------|------|----------|-------------|
+| `payment_id` | string | ✅ | Unique payment identifier received from Uzum FastPay payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Javob maydonlari
+
+### ✅ Muvaffaqiyatli javob
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | object | Javob ma'lumoti |
+| `data.payment_id` | string | Payment identifier |
+| `data.payment_status` | string | Fiscalization status (`SUCCESS`, `FAILED`, etc.) |
+| `data.error_code` | string | Provider error code (`0` on success) |
+| `data.error_message` | string \| null | Error description (null on success) |
+| `data.client_phone_number` | string | Client phone number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Xatolik javobi
+
+> **Eslatma:** Validatsiya xatosi bo'lsa ham server HTTP `200` qaytaradi.
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | O'qilishi oson xato xabari |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

@@ -1,0 +1,51 @@
+---
+title: Anor fiskalizatsiyasi
+description: Anor to'lovlarini fiskalizatsiya qilish
+openapi: 'POST /payment/anor_confirm'
+---
+
+## Umumiy ko'rinish
+
+**Anor Fiscalization API** avval boshlangan to'lovni yakunlash (fiskalizatsiya) uchun ishlatiladi
+initiated Anor payment.
+
+Bu endpoint to'lovni tasdiqlaydi va Soliq (OFD) tomonidan yaratilgan fiskal chekni biriktiradi
+by Soliq (OFD).
+
+---
+
+## So'rov maydonlari
+
+| Maydon | Turi | Majburiy | Tavsif |
+|------|------|----------|-------------|
+| `transaction_id` | string | ✅ | Unique transaction (payment) identifier received from Anor payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Javob maydonlari
+
+### ✅ Muvaffaqiyatli javob
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | object | Javob ma'lumoti |
+| `data.message` | string | O'qilishi oson xato xabari by provider |
+| `data.error_code` | integer | error_code provided by Provider |
+| `data.payment_id` | integer | Unique payment identifier received from Anor payment |
+| `data.transaction_id` | string \| null | Unique transaction identifier received from Anor payment |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Xatolik javobi
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | O'qilishi oson xato xabari |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

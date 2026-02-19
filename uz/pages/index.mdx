@@ -1,0 +1,86 @@
+---
+title: "Kirish"
+description: "FiscalBox fiskalizatsiya va billing uchun integratsiya hamda API qo'llanmalari"
+---
+
+## Umumiy ko'rinish
+
+FiscalBox hujjatlarida POS tizimlarini fiskalizatsiya, to'lov, hisobot va billing endpointlariga ulash uchun kerak bo'lgan barcha ma'lumotlar bor.
+
+<Frame>
+    <img src="/images/fbox_wp.jpg"
+         alt="FiscalBox WP"
+         style={{borderRadius: '0.5rem'}}/>
+</Frame>
+
+<Info>
+    Ushbu loyiha endpointlar bo'yicha amaliy qo'llanmalarni o'z ichiga oladi:
+    - Buyurtma amallari
+    - To'lov provayderlari (Click, Payme, Uzum, Anor)
+    - Hisobotlar (Z-hisobot va bog'liq amallar)
+    - Billing va servis vositalari
+</Info>
+
+## Shu yerdan boshlang
+
+<CardGroup cols={2}>
+    <Card title="Tez boshlash" icon="rocket" href="/uz/quickstart">
+        Birinchi to'liq integratsiya oqimini sozlang.
+    </Card>
+
+    <Card title="Development" icon="screwdriver-wrench" href="/uz/development">
+        Hujjatlarni lokal ishga tushiring va sahifalarni API o'zgarishlariga mos holda yangilang.
+    </Card>
+
+    <Card title="API kirish" icon="book" href="/uz/api-reference/introduction">
+        Tuzilma, autentifikatsiya va endpoint toifalarini ko'ring.
+    </Card>
+
+    <Card title="Order Create" icon="receipt" href="/uz/api-reference/endpoint/order/create/order-create">
+        Ko'p integratsiyalarda ishlatiladigan asosiy endpointdan boshlang.
+    </Card>
+</CardGroup>
+
+## API bo'limlari
+
+Quyida FiscalBox turli tizimlar bilan qanday ishlashi ko'rsatilgan.
+<Frame>
+    <img src="/images/fbox_workflow.png"
+         alt="FiscalBox workflow"
+         style={{borderRadius: '0.5rem'}}/>
+</Frame>
+
+<Columns cols={2}>
+    <Card title="Buyurtma" icon="receipt" href="/uz/api-reference/endpoint/order/create/order-create">
+        Cheklarni yaratish, chop etish va bekor qilish.
+    </Card>
+
+    <Card title="To'lov" icon="money-check-dollar" href="/uz/api-reference/endpoint/payment/click/index">
+        Provayderga xos to'lov oqimlari va fiskalizatsiya.
+    </Card>
+
+    <Card title="Hisobotlar" icon="file-waveform" href="/uz/api-reference/endpoint/report/zreport-open">
+        Z-hisobot ma'lumotlarini ochish, yopish, chop etish va solishtirish.
+    </Card>
+
+    <Card title="Billing" icon="chart-pie" href="/uz/api-reference/endpoint/billing/auth/login/login">
+        Autentifikatsiya va billingga oid amallar.
+    </Card>
+</Columns>
+
+## Tashqi resurslar
+
+<CardGroup cols={3}>
+    <Card title="Yangi KKM ro'yxatdan o'tkazish" icon="laptop-medical"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdme1n1oaE4Kmo_4kCqfuBAko-2_UmaXu_c14__KeGoXDjy9A/viewform">
+        Yangi fiskal qurilmani ro'yxatdan o'tkazing.
+    </Card>
+
+    <Card title="Billing tizimi" icon="pie-chart" href="https://admin.fbox.uz/">
+        Billing admin panelini oching.
+    </Card>
+
+    <Card title="KKM kuzatuv testi" icon="video" href="http://94.158.54.150:8000/">
+        Test kuzatuv panelini oching.
+    </Card>
+</CardGroup>

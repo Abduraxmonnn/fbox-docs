@@ -1,0 +1,82 @@
+---
+title: "Tez boshlash"
+description: "FiscalBox integratsiyasi va hujjatlaridan foydalanishni tez boshlash"
+---
+
+## Integratsiya 5 bosqichda
+
+<Steps>
+  <Step title="Ma'lumotlar va muhitni tayyorlang">
+
+  API base URL, terminal/qurilma ma'lumotlari va to'lov oqimingiz uchun kerakli provayder identifikatorlarini yig'ing.
+
+  </Step>
+
+  <Step title="Order Create'dan boshlang">
+
+  `POST /order/create/` endpointini birinchi integratsiya nuqtasi sifatida ishlating:
+
+  - Mahsulot va to'lovning majburiy maydonlarini to'ldiring
+  - Chek metama'lumotlarini yuboring (`time`, `cashier` va boshqalar)
+  - Fiskal javob qiymatlarini saqlang (`terminal_id`, `receipt_count`, `fiscal_sign`, `qr_url`)
+
+  Sahifa: [Order Create](/uz/api-reference/endpoint/order/create/order-create)
+
+  </Step>
+
+  <Step title="To'lov provayder endpointlarini ulang">
+
+  Kerak bo'lsa, provayderga xos marshrutlarni ulang:
+
+  - Click: [docs](/uz/api-reference/endpoint/payment/click/index)
+  - Payme: [docs](/uz/api-reference/endpoint/payment/payme/index)
+  - Uzum: [docs](/uz/api-reference/endpoint/payment/uzum/index)
+  - Anor: [docs](/uz/api-reference/endpoint/payment/anor/index)
+
+  </Step>
+
+  <Step title="Hisobot va operatsiyalarni qo'shing">
+
+  Biznes jarayoningiz uchun kerakli amallarni integratsiya qiling:
+
+  - Z-hisobot open/close/print/info/sverka
+  - Cash drawer ochish
+  - Info va banner endpointlari
+
+  </Step>
+
+  <Step title="To'liq oqimni tekshiring">
+
+  Muvaffaqiyatli va xatolik holatlarini tekshiring:
+
+  - fiskal javob bilan muvaffaqiyatli buyurtma
+  - printer/qurilma xatolarini qayta ishlash
+  - provayder rad etishi va retry xulqi
+  - kun oxirida hisobotni yopish ketma-ketligi
+
+  </Step>
+</Steps>
+
+## Tez navigatsiya
+
+<CardGroup cols={2}>
+  <Card title="API kirish" icon="book" href="/uz/api-reference/introduction">
+    API tuzilmasi va foydalanish modeli.
+  </Card>
+
+  <Card title="Billing Auth" icon="key" href="/uz/api-reference/endpoint/billing/auth/login/login">
+    Billing APIlari uchun token oling.
+  </Card>
+
+  <Card title="Z-Report Open" icon="file-waveform" href="/uz/api-reference/endpoint/report/zreport-open">
+    Hisobot oqimini boshlang.
+  </Card>
+
+  <Card title="Cash Drawer" icon="cash-register" href="/uz/api-reference/endpoint/tool/cash-drawer/open">
+    Qurilma amali endpointi.
+  </Card>
+</CardGroup>
+
+<Warning>
+  Fiskal validatsiya xatolarini oldini olish uchun hujjatdagi birliklarga aniq rioya qiling (`100` yoki `1000` ga ko'paytiriladigan qiymatlar kabi).
+</Warning>

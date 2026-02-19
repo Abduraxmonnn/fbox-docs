@@ -1,0 +1,78 @@
+---
+title: Обзор Payme
+description: API инициации платежей и фискализации Payme
+icon: grip-lines
+---
+
+## Обзор
+
+**Payme API** предоставляет полный процесс обработки платежей, включая **инициацию платежа** и **фискализацию**.
+
+Интеграция разделена на два независимых этапа:
+
+1. **PayMe Go** – initiates a PayMe payment using an amount and QR code.
+2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
+
+Этот подход обеспечивает надежную обработку платежей и соответствие фискальным требованиям.
+
+---
+
+## Общие настройки
+
+Все эндпоинты Payme используют общие настройки:
+
+- **Код статуса:** `200`/`400`/`500`
+- **Метод:** `POST`
+- **Требуется авторизация:** `Нет`
+- **Content-Type:** `application/json`
+
+> **Примечание:** Даже при ошибках валидации, платежа или фискализации API возвращает HTTP `200`.
+
+- Всегда проверяйте `is_success` и `HTTP status code`, чтобы определить успешность запроса.
+- `data` содержит данные при успехе, `error` содержит детали ошибки.
+
+---
+
+## Поток оплаты
+
+Типичный поток платежа Payme состоит из следующих шагов:
+
+1. The client initiates a payment via the **PayMe Go API**
+2. PayMe processes the payment and returns a unique `payment_id`
+3. After successful payment, the transaction is sent for **fiscalization**
+4. Формируется фискальный чек и регистрируется в системе Soliq
+
+Каждый этап обрабатывается отдельным эндпоинтом.
+
+---
+
+## API Payme
+
+Изучите эндпоинты Payme ниже для интеграции платежей и фискализации в вашей системе.
+
+<Columns cols={2}>
+    <Card
+        title="PayMe Go"
+        icon="credit-card"
+        href="/ru/api-reference/endpoint/payment/payme/go"
+    >
+        Initiate PayMe payments by providing the payment amount and QR code.
+        Returns a payment identifier used for further fiscal processing.
+    </Card>
+
+    <Card
+        title="Фискализация"
+        icon="receipt"
+        href="/ru/api-reference/endpoint/payment/payme/fiscalization"
+    >
+        Fiscalize completed PayMe payments and generate official fiscal receipts.
+    </Card>
+</Columns>
+
+---
+
+## Среда
+
+API Payme доступны в следующих окружениях:
+
+- **Payment API**

@@ -1,0 +1,82 @@
+---
+title: "Быстрый старт"
+description: "Быстрый запуск интеграции FiscalBox и работы с документацией"
+---
+
+## Интеграция за 5 шагов
+
+<Steps>
+  <Step title="Подготовьте данные и среду">
+
+  Соберите base URL API, данные терминала/устройства и идентификаторы, необходимые для вашего платежного потока.
+
+  </Step>
+
+  <Step title="Начните с Order Create">
+
+  Используйте `POST /order/create/` как первую точку интеграции:
+
+  - Подготовьте обязательные поля товаров и оплаты
+  - Передавайте метаданные чека (`time`, `cashier` и т.д.)
+  - Сохраняйте фискальные значения ответа (`terminal_id`, `receipt_count`, `fiscal_sign`, `qr_url`)
+
+  Страница: [Order Create](/ru/api-reference/endpoint/order/create/order-create)
+
+  </Step>
+
+  <Step title="Подключите эндпоинты платежных провайдеров">
+
+  При необходимости подключите маршруты конкретных провайдеров:
+
+  - Click: [docs](/ru/api-reference/endpoint/payment/click/index)
+  - Payme: [docs](/ru/api-reference/endpoint/payment/payme/index)
+  - Uzum: [docs](/ru/api-reference/endpoint/payment/uzum/index)
+  - Anor: [docs](/ru/api-reference/endpoint/payment/anor/index)
+
+  </Step>
+
+  <Step title="Добавьте отчеты и операционные действия">
+
+  Интегрируйте операции, нужные вашему бизнес-процессу:
+
+  - Открытие/закрытие/печать/info/sverka Z-отчета
+  - Открытие денежного ящика
+  - Эндпоинты info и banner
+
+  </Step>
+
+  <Step title="Проверьте сквозной процесс">
+
+  Проверьте успешные и ошибочные сценарии:
+
+  - успешный заказ с фискальным ответом
+  - обработка сбоя принтера/устройства
+  - отказ провайдера и retry-логика
+  - последовательность закрытия отчета в конце дня
+
+  </Step>
+</Steps>
+
+## Быстрая навигация
+
+<CardGroup cols={2}>
+  <Card title="Введение в API" icon="book" href="/ru/api-reference/introduction">
+    Структура API и модель использования.
+  </Card>
+
+  <Card title="Billing Auth" icon="key" href="/ru/api-reference/endpoint/billing/auth/login/login">
+    Получить токен для billing API.
+  </Card>
+
+  <Card title="Z-Report Open" icon="file-waveform" href="/ru/api-reference/endpoint/report/zreport-open">
+    Начать процесс отчетности.
+  </Card>
+
+  <Card title="Cash Drawer" icon="cash-register" href="/ru/api-reference/endpoint/tool/cash-drawer/open">
+    Эндпоинт операции устройства.
+  </Card>
+</CardGroup>
+
+<Warning>
+  Соблюдайте единицы из документации точно (например, значения, умноженные на `100` или `1000`), чтобы избежать ошибок фискальной валидации.
+</Warning>

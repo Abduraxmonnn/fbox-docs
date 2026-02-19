@@ -1,0 +1,77 @@
+---
+title: Uzum umumiy ko'rinish
+description: Uzum to'lovi va fiskalizatsiya APIlari
+icon: grip-lines
+---
+
+## Umumiy ko'rinish
+
+**Uzum FastPay API** Uzum FastPay orqali to'lovlarni qayta ishlashni ta'minlaydi, bunda **to'lovni boshlash** va **fiskalizatsiya** bor.
+
+Integratsiya ikki mustaqil bosqichga bo'linadi:
+
+1. **Uzum FastPay Payment** – initiates a payment using an amount and QR code.
+2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
+
+Bu ajratish to'lovlarni ishonchli qayta ishlash va fiskal talablar bilan moslikni ta'minlaydi.
+
+---
+
+## Umumiy sozlamalar
+
+Barcha Uzum endpointlari quyidagi umumiy sozlamalarga ega:
+
+- **Status kodi:** `200`/`400`/`500`
+- **Metod:** `POST`
+- **Avtorizatsiya kerak:** `Yo'q`
+- **Content-Type:** `application/json`
+
+> **Eslatma:** Validatsiya, to'lov yoki fiskalizatsiya xatolari bo'lsa ham API HTTP `200` qaytaradi.
+
+- So'rov muvaffaqiyatli bo'lganini aniqlash uchun har doim `is_success` va `HTTP status code` ni tekshiring.
+- Muvaffaqiyatda `data`, xatolikda `error` qaytadi.
+
+---
+
+## To'lov oqimi
+
+Odatdagi Uzum FastPay to'lov oqimi quyidagi bosqichlardan iborat:
+
+1. The client initiates a payment via the **Uzum FastPay Payment API**
+2. Uzum processes the transaction and returns a unique `payment_id`
+3. After successful payment, the transaction is sent for **fiscalization**
+4. Fiskal chek yaratiladi va Soliq tizimida ro'yxatdan o'tkaziladi
+
+Har bir bosqich alohida endpoint tomonidan bajariladi.
+
+---
+
+## Uzum FastPay APIlari
+
+Uzum FastPay to'lov va fiskalizatsiya endpointlarini ko'rish uchun quyidagi bo'limlardan foydalaning.
+
+<Columns cols={2}>
+    <Card
+        title="Uzum FastPay Payment"
+        icon="credit-card"
+        href="/uz/api-reference/endpoint/payment/uzum/fastpay"
+    >
+        Initiate Uzum FastPay payments by providing the payment amount and QR code.
+        Returns a payment identifier for further processing.
+    </Card>
+
+    <Card
+        title="Fiskalizatsiya"
+        icon="receipt"
+        href="/uz/api-reference/endpoint/payment/uzum/fiscalization"
+    >
+        Fiscalize completed Uzum FastPay payments and generate official fiscal receipts.
+    </Card>
+</Columns>
+
+---
+
+## Muhit
+
+Uzum FastPay APIlari quyidagi base URL orqali mavjud:
+

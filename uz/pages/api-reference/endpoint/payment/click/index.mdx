@@ -1,0 +1,78 @@
+---
+title: Click umumiy ko'rinish
+description: Click to'lovi va fiskalizatsiya APIlari
+icon: grip-lines
+---
+
+## Umumiy ko'rinish
+
+**Click API** Click to'lovlarini qayta ishlash uchun to'liq jarayonni taqdim etadi: to'lovni boshlashdan fiskalizatsiya va chek yaratishgacha.
+
+Integratsiya ikki mantiqiy bosqichga bo'linadi:
+
+1. **Click Pass** – QR-kod va summa orqali to'lovni boshlaydi.
+2. **Fiskalizatsiya** – yakunlangan to'lovni tasdiqlaydi va soliq tizimida ro'yxatdan o'tkazadi.
+
+Bu yondashuv moslashuvchanlik, ishonchlilik va fiskal talablar bilan moslikni ta'minlaydi.
+
+---
+
+## Umumiy sozlamalar
+
+Barcha Click endpointlari quyidagi umumiy sozlamalarga ega:
+
+- **Status kodi:** `200`/`400`/`500`
+- **Metod:** `POST`
+- **Avtorizatsiya kerak:** `Yo'q`
+- **Content-Type:** `application/json`
+
+> **Eslatma:** Validatsiya, to'lov yoki fiskalizatsiya xatolari bo'lsa ham API HTTP `200` qaytaradi.
+
+- So'rov muvaffaqiyatli bo'lganini aniqlash uchun har doim `is_success` va `HTTP status code` ni tekshiring.
+- Muvaffaqiyatda `data`, xatolikda `error` qaytadi.
+
+---
+
+## To'lov oqimi
+
+Odatdagi Click to'lov oqimi quyidagicha:
+
+1. Mijoz **Click Pass API** orqali to'lovni boshlaydi
+2. Click to'lovni qayta ishlaydi va `payment_id` qaytaradi
+3. To'lov muvaffaqiyatli bo'lgach, tranzaksiya **fiskalizatsiya** qilinadi
+4. Fiskal chek yaratiladi va Soliq tizimida ro'yxatdan o'tkaziladi
+
+Har bir bosqich alohida endpoint bilan bajariladi.
+
+---
+
+## Click APIlari
+
+Click integratsiyasining har bir qismini batafsil ko'rish uchun quyidagi bo'limlardan foydalaning.
+
+<Columns cols={2}>
+    <Card
+        title="Click Pass"
+        icon="credit-card"
+        href="/uz/api-reference/endpoint/payment/click/pass"
+    >
+        To'lov summasi va QR-kodni yuborib Click to'lovini boshlang.
+        Keyingi ishlov uchun to'lov identifikatorini qaytaradi.
+    </Card>
+
+    <Card
+        title="Fiskalizatsiya"
+        icon="receipt"
+        href="/uz/api-reference/endpoint/payment/click/fiscalization"
+    >
+        Yakunlangan Click to'lovini tasdiqlang va fiskalizatsiya qiling.
+        Tranzaksiyani ro'yxatdan o'tkazadi va fiskal chek yaratadi.
+    </Card>
+</Columns>
+
+---
+
+## Muhit
+
+Barcha endpointlar hozirda quyidagi base URL orqali mavjud:
+

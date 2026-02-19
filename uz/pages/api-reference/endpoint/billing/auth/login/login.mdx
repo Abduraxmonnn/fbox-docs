@@ -1,0 +1,57 @@
+---
+title: Avtorizatsiya
+description: Foydalanuvchini autentifikatsiya qilish va token olish
+openapi: 'POST /api/v1/login/'
+---
+
+## Umumiy ko'rinish
+
+**Billing Login API** billing tizimida foydalanuvchini autentifikatsiya qilish uchun ishlatiladi.
+
+Bu endpoint foydalanuvchi ma'lumotlarini tekshiradi va autentifikatsiya tokenini qaytaradi
+`token` that must be used to access protected billing APIs.
+
+> 🔓 **Eslatma:** **Bu endpoint uchun avtorizatsiya talab qilinmaydi**.
+
+---
+
+[//]: # (## Usage Notes)
+
+[//]: # ()
+[//]: # (- This endpoint is publicly accessible)
+
+[//]: # (- Valid credentials are required to obtain an access token)
+
+[//]: # (- Invalid credentials will result in an authentication error)
+
+[//]: # (- The returned token is required for protected Billing API endpoints)
+
+[//]: # ()
+[//]: # (---)
+
+## So'rov maydonlari
+
+| Maydon | Turi | Majburiy | Tavsif |
+|------|------|----------|-------------|
+| `username` | string | ✅ | User login |
+| `password` | string | ✅ | User password |
+
+---
+
+## Javob maydonlari
+
+### ✅ Muvaffaqiyatli javob `200`
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `token` | string | Access token used for authorized requests |
+
+---
+
+### 🚫 Xatolik javobi `400`
+
+> **Eslatma:** Noto'g'ri login/parol yoki validatsiya xatolarida.
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `error` | string | O'qilishi oson xato xabari |

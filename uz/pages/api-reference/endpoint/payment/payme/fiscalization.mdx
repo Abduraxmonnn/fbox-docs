@@ -1,0 +1,52 @@
+---
+title: Payme fiskalizatsiyasi
+description: Payme to'lovlarini fiskalizatsiya qilish
+openapi: 'POST /payment/payme_confirm'
+---
+
+## Umumiy ko'rinish
+
+**Payme Fiscalization API** avval boshlangan to'lovni yakunlash (fiskalizatsiya) uchun ishlatiladi
+initiated Payme payment.
+
+Bu endpoint to'lovni tasdiqlaydi va Soliq (OFD) tomonidan yaratilgan fiskal chekni biriktiradi
+by Soliq (OFD).
+
+---
+
+## So'rov maydonlari
+
+| Maydon | Turi | Majburiy | Tavsif |
+|------|------|----------|-------------|
+| `payment_id` | string | ✅ | Unique payment identifier received from Payme payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Javob maydonlari
+
+### ✅ Muvaffaqiyatli javob
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | object | Javob ma'lumoti |
+| `data.id` | integer | Internal fiscalization ID |
+| `data.result.receipt._id` | string | Receipt identifier |
+| `data.result.receipt.create_time` | integer | Receipt creation timestamp (ms) |
+| `data.result.receipt.pay_time` | integer | Payment timestamp (ms) |
+| `data.error` | string \| null | Error description (null on success) |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Xatolik javobi
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | O'qilishi oson xato xabari |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

@@ -1,0 +1,184 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Anor Payment API",
+    "description": "Initiate payments using Anor",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT",
+      "identifier": ""
+    }
+  },
+  "servers": [
+    {
+      "url": "https://fbox.ngrok.io"
+    }
+  ],
+  "paths": {
+    "/payment/anor": {
+      "post": {
+        "summary": "Anor payment",
+        "operationId": "anorPayment",
+        "tags": [
+          "Anor Payment"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnorPaymentRequest"
+              },
+              "example": {
+                "amount": 1000,
+                "qr_code": "50502044301381396427"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment processed (success or error)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/AnorPaymentSuccessResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/AnorPaymentErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation or provider error (may still be returned as 200 by backend)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnorPaymentErrorResponse"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Invalid payment amount",
+                  "error_code": 104
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AnorPaymentRequest": {
+        "type": "object",
+        "required": [
+          "amount",
+          "qr_code"
+        ],
+        "properties": {
+          "amount": {
+            "type": "integer",
+            "description": "Payment amount in sums",
+            "example": 1000
+          },
+          "qr_code": {
+            "type": "string",
+            "description": "Unique Anor transaction identifier",
+            "example": "50502044301381396427"
+          }
+        }
+      },
+      "AnorPaymentSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "transaction_id": {
+                "type": "string",
+                "description": "Transaction UUID",
+                "example": "a12fc00f-5af5-65b8-adf8-74bff44680ee"
+              },
+              "status": {
+                "type": "string",
+                "description": "Payment status",
+                "example": "successfully"
+              },
+              "message": {
+                "type": "string",
+                "description": "Optional provider message",
+                "example": "Payment completed successfully"
+              },
+              "error_code": {
+                "type": "string",
+                "description": "Provider error code (if any)",
+                "nullable": true,
+                "example": null
+              },
+              "payment_id": {
+                "type": "string",
+                "description": "Unique payment identifier",
+                "example": "696e0246c9a128176d5934d8"
+              },
+              "error_note": {
+                "type": "string",
+                "description": "Error note (if any)",
+                "nullable": true,
+                "example": null
+              },
+              "payment_status": {
+                "type": "integer",
+                "description": "Payment status code provided by Anor",
+                "example": 1
+              },
+              "phone_number": {
+                "type": "string",
+                "description": "Client phone number",
+                "example": "998712565009"
+              },
+              "card_number": {
+                "type": "string",
+                "description": "Client card number",
+                "example": "860012******3456"
+              }
+            }
+          },
+          "error": {
+            "type": "null",
+            "example": null
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "AnorPaymentErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Error status",
+            "example": "error"
+          },
+          "message": {
+            "type": "string",
+            "description": "Human-readable error message",
+            "example": "Invalid QR code"
+          },
+          "error_code": {
+            "type": "integer",
+            "description": "Error code provided by Anor",
+            "example": 104
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Order Refuse API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/order/refuse": {
+      "post": {
+        "summary": "Refuse order (refund)",
+        "description": "Performs fiscal refund for an existing order",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "number": {
+                    "type": "integer"
+                  },
+                  "uuid": {
+                    "type": "string"
+                  },
+                  "time": {
+                    "type": "string"
+                  },
+                  "cashier": {
+                    "type": "string"
+                  },
+                  "products": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "barcode": {
+                          "type": "string"
+                        },
+                        "amount": {
+                          "type": "integer"
+                        },
+                        "unit_name": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "integer"
+                        },
+                        "product_price": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "barcode",
+                        "amount",
+                        "unit_name",
+                        "price",
+                        "product_price"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "number",
+                  "time",
+                  "cashier",
+                  "products"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Refund processed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "terminal_id": {
+                          "type": "string"
+                        },
+                        "receipt_count": {
+                          "type": "integer"
+                        },
+                        "date_time": {
+                          "type": "string"
+                        },
+                        "fiscal_sign": {
+                          "type": "string"
+                        },
+                        "applet_version": {
+                          "type": "string"
+                        },
+                        "qr_url": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "error": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "is_success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

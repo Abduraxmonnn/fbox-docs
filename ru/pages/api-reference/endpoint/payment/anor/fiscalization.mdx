@@ -1,0 +1,51 @@
+---
+title: Фискализация Anor
+description: Фискализация платежей Anor
+openapi: 'POST /payment/anor_confirm'
+---
+
+## Обзор
+
+**Anor Fiscalization API** используется для завершения (фискализации) ранее
+initiated Anor payment.
+
+Эндпоинт подтверждает платеж, прикрепляя фискальный чек, сгенерированный
+by Soliq (OFD).
+
+---
+
+## Поля запроса
+
+| Поле | Тип | Обяз. | Описание |
+|------|------|----------|-------------|
+| `transaction_id` | string | ✅ | Unique transaction (payment) identifier received from Anor payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Поля ответа
+
+### ✅ Успешный ответ
+
+| Поле | Тип | Описание |
+|------|------|-------------|
+| `data` | object | Данные ответа |
+| `data.message` | string | Понятное описание ошибки by provider |
+| `data.error_code` | integer | error_code provided by Provider |
+| `data.payment_id` | integer | Unique payment identifier received from Anor payment |
+| `data.transaction_id` | string \| null | Unique transaction identifier received from Anor payment |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Ответ с ошибкой
+
+| Поле | Тип | Описание |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | Понятное описание ошибки |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

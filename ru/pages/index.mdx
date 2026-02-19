@@ -1,0 +1,86 @@
+---
+title: "Введение"
+description: "Руководства по интеграции и API для фискализации и биллинга FiscalBox"
+---
+
+## Обзор
+
+Документация FiscalBox содержит все необходимое для подключения POS-систем к эндпоинтам фискализации, платежей, отчетов и биллинга.
+
+<Frame>
+    <img src="/images/fbox_wp.jpg"
+         alt="FiscalBox WP"
+         style={{borderRadius: '0.5rem'}}/>
+</Frame>
+
+<Info>
+    Этот проект включает практические гайды по эндпоинтам для:
+    - Операций заказа
+    - Платежных провайдеров (Click, Payme, Uzum, Anor)
+    - Отчетов (Z-отчет и связанные операции)
+    - Биллинга и служебных инструментов
+</Info>
+
+## Начните здесь
+
+<CardGroup cols={2}>
+    <Card title="Быстрый старт" icon="rocket" href="/ru/quickstart">
+        Настройте первый сквозной интеграционный поток.
+    </Card>
+
+    <Card title="Разработка" icon="screwdriver-wrench" href="/ru/development">
+        Запускайте документацию локально и поддерживайте страницы в актуальном состоянии.
+    </Card>
+
+    <Card title="Введение в API" icon="book" href="/ru/api-reference/introduction">
+        Ознакомьтесь со структурой, авторизацией и категориями эндпоинтов.
+    </Card>
+
+    <Card title="Создание заказа" icon="receipt" href="/ru/api-reference/endpoint/order/create/order-create">
+        Начните с основного эндпоинта, используемого в большинстве интеграций.
+    </Card>
+</CardGroup>
+
+## Разделы API
+
+Ниже показано, как FiscalBox взаимодействует с различными системами.
+<Frame>
+    <img src="/images/fbox_workflow.png"
+         alt="FiscalBox workflow"
+         style={{borderRadius: '0.5rem'}}/>
+</Frame>
+
+<Columns cols={2}>
+    <Card title="Заказы" icon="receipt" href="/ru/api-reference/endpoint/order/create/order-create">
+        Создание, печать и отказ чеков.
+    </Card>
+
+    <Card title="Платежи" icon="money-check-dollar" href="/ru/api-reference/endpoint/payment/click/index">
+        Платежные потоки по провайдерам и фискализация.
+    </Card>
+
+    <Card title="Отчеты" icon="file-waveform" href="/ru/api-reference/endpoint/report/zreport-open">
+        Открытие, закрытие, печать и сверка данных Z-отчета.
+    </Card>
+
+    <Card title="Биллинг" icon="chart-pie" href="/ru/api-reference/endpoint/billing/auth/login/login">
+        Аутентификация и операции, связанные с биллингом.
+    </Card>
+</Columns>
+
+## Внешние ресурсы
+
+<CardGroup cols={3}>
+    <Card title="Регистрация новой ККМ" icon="laptop-medical"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSdme1n1oaE4Kmo_4kCqfuBAko-2_UmaXu_c14__KeGoXDjy9A/viewform">
+        Зарегистрировать новое фискальное устройство.
+    </Card>
+
+    <Card title="Система биллинга" icon="pie-chart" href="https://admin.fbox.uz/">
+        Открыть административную панель биллинга.
+    </Card>
+
+    <Card title="Тест наблюдения ККМ" icon="video" href="http://94.158.54.150:8000/">
+        Открыть тестовую панель наблюдения.
+    </Card>
+</CardGroup>

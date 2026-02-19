@@ -1,0 +1,54 @@
+---
+title: Фискализация Click
+description: Фискализация платежей Click
+openapi: 'POST /payment/click_confirm'
+---
+
+## Обзор
+
+**Click Fiscalization API** используется для завершения (фискализации) ранее
+initiated Click payment.
+
+Эндпоинт подтверждает платеж, прикрепляя фискальный чек, сгенерированный
+by Soliq (OFD).
+
+---
+
+## Поля запроса
+
+| Поле | Тип | Обяз. | Описание |
+|------|------|----------|-------------|
+| `payment_id` | string | ✅ | Unique payment identifier received from Click payment |
+| `qr_code` | string | ✅ | URL of the fiscal receipt from Soliq (OFD) |
+
+---
+
+## Поля ответа
+
+### ✅ Успешный ответ
+
+| Поле | Тип | Описание |
+|------|------|-------------|
+| `data` | object | Данные ответа |
+| `data.payment_id` | string \| null | Payment identifier |
+| `data.inn` | string \| null | Taxpayer identification number (if available) |
+| `data.qr_code` | string \| null | Fiscal receipt URL |
+| `data.status` | string | Fiscalization status (`successfully`, `failed`, etc.) |
+| `data.error` | string \| null | Error description (null on success) |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Ответ с ошибкой
+
+> **Примечание:** Даже при ошибке валидации сервер возвращает HTTP `200`.
+
+| Поле | Тип | Описание |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal validation or processing error code |
+| `error.message` | string | Понятное описание ошибки |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

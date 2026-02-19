@@ -1,0 +1,119 @@
+---
+title: "Development"
+description: "FiscalBox APIlari uchun integratsiya workflow"
+---
+
+## Integratsiya qamrovi
+
+FiscalBox integratsiyasi odatda quyidagi bloklarni o'z ichiga oladi:
+
+- Buyurtma hayot sikli (`create`, `print`, `refuse`)
+- To'lov provayder oqimlari (Click, Payme, Uzum, Anor)
+- Hisobot oqimi (Z-report open/close/print/info/sverka)
+- Qurilma/servis amallari (cash drawer, info, banners)
+
+## Boshlang'ich talablar
+
+- Fiskal qurilma/terminalga kirish
+- Muhitingiz uchun API base URL
+- Billing credentials (billing endpointlar uchun)
+- POS maydonlarini FiscalBox so'rov maydonlariga aniq mapping
+
+## Tavsiya etilgan integratsiya tartibi
+
+<Steps>
+  <Step title="Kerakli joyda autentifikatsiya qiling">
+
+  Billing himoyalangan APIlarni integratsiya qilayotganda avval billing authdan boshlang:
+  - [Billing Login](/uz/api-reference/endpoint/billing/auth/login/login)
+
+  Tokenlarni backend xavfsizlik siyosatiga muvofiq saqlang va yangilang.
+
+  </Step>
+
+  <Step title="Order Create'ni asosiy tranzaksiya qiling">
+
+  Boshlang:
+  - [Order Create](/uz/api-reference/endpoint/order/create/order-create)
+
+  Majburiy maydonlar, son birliklari va javobni saqlashni tekshiring (`receipt_count`, `fiscal_sign`, `qr_url`).
+
+  </Step>
+
+  <Step title="Provayderga xos marshrutlarni qo'shing">
+
+  Faqat productionda ishlatiladigan provayderlarni integratsiya qiling:
+  - [Click](/uz/api-reference/endpoint/payment/click/index)
+  - [Payme](/uz/api-reference/endpoint/payment/payme/index)
+  - [Uzum](/uz/api-reference/endpoint/payment/uzum/index)
+  - [Anor](/uz/api-reference/endpoint/payment/anor/index)
+
+  Provayderga xos `extra_info` qoidalarini adapter logikada alohida saqlang.
+
+  </Step>
+
+  <Step title="Hisobot va kunlik yopish logikasini qo'shing">
+
+  Kun oxiri operatsiyalariga hisobot endpointlarini kiriting:
+  - [Z-Report Open](/uz/api-reference/endpoint/report/zreport-open)
+  - [Z-Report Close](/uz/api-reference/endpoint/report/zreport-close)
+  - Bog'liq print/info/sverka endpointlari
+
+  </Step>
+
+  <Step title="Operatsion endpointlarni ulang">
+
+  Kerak bo'lganda quyidagilarni qo'shing:
+  - [Open Cash Drawer](/uz/api-reference/endpoint/tool/cash-drawer/open)
+  - [Info](/uz/api-reference/endpoint/info/info)
+  - [Banner](/uz/api-reference/endpoint/banner/banner)
+
+  </Step>
+
+  <Step title="Production uchun mustahkamlang">
+
+  Qo'shing:
+  - Request/response audit logging
+  - Retry xavfsizligi uchun idempotency strategiyasi
+  - Endpoint turiga qarab timeout va retry siyosati
+  - Fiskal xatolar va printer/qurilma nosozliklari monitoringi
+
+  </Step>
+</Steps>
+
+## Ma'lumot mapping checklisti
+
+- Barcha pul/scale qiymatlar kutilgan birliklarda ekanini tekshiring (`*100`, `*1000`).
+- Majburiy mahsulot metama'lumotlari doim mavjud bo'lsin (`barcode`, `class_code`, `package_code` va h.k.).
+- Muayyan to'lov usullarida majburiy bo'lib qoladigan optional maydonlarni validatsiya qiling.
+- Fiskal javob maydonlarini reconciliation va support operatsiyalari uchun saqlang.
+
+## Test strategiyasi
+
+1. Integratsiya testlari uchun sandbox/test qurilmalardan foydalaning.
+2. Har bir kritik endpoint uchun success va error payloadlarni qamrab oling.
+3. Bir kunlik to'liq sikl bo'yicha end-to-end test o'tkazing: open -> sales -> close.
+4. Real qurilma sharoitida chek chop etish va QR havolalarni tekshiring.
+
+## Productionga tayyorgarlik
+
+- Tokenlarni server tomonda xavfsiz saqlang.
+- Idempotency key/checksiz fiskal amallarni takror yuborishdan saqlaning.
+- Request ID va fiskal javob identifikatorlari bilan strukturali log yuriting.
+- API yoki qurilma vaqtinchalik ishlamay qolganda fallback UX belgilang.
+
+## Integratsiyadagi keng tarqalgan risklar
+
+<AccordionGroup>
+  <Accordion title="Summaning noto'g'ri scale yuborilishi">
+    Noto'g'ri birlikda yuborilgan qiymatlar noto'g'ri jami yoki fiskal rad etishga olib keladi. Konvertatsiya qoidalarini bitta servis/modulga markazlashtiring.
+  </Accordion>
+
+  <Accordion title="Provayderga xos maydon xatolari">
+    To'lov provayderlari oqimga qarab qo'shimcha maydon talab qilishi mumkin. So'rov yuborishdan oldin payloadni validatsiya qiling.
+  </Accordion>
+
+  <Accordion title="Retry paytida fiskal amallarning dublikatlanishi">
+    Idempotency tekshiruvlarisiz retry dublikat amallarni yaratishi mumkin. Retry guard va request tracing qo'shing.
+  </Accordion>
+</AccordionGroup>

@@ -9,102 +9,316 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "tabs": [
+    "languages": [
       {
-        "tab": "Documentation",
-        "groups": [
+        "language": "en",
+        "hidden": false,
+        "tabs": [
           {
-            "group": "Getting started",
-            "pages": [
-              "pages/index",
-              "pages/quickstart",
-              "pages/development"
+            "tab": "Documentation",
+            "groups": [
+              {
+                "group": "Getting started",
+                "pages": [
+                  "pages/index",
+                  "pages/quickstart",
+                  "pages/development"
+                ]
+              }
+            ]
+          },
+          {
+            "tab": "API reference",
+            "groups": [
+              {
+                "group": "API documentation",
+                "pages": [
+                  "pages/api-reference/introduction"
+                ]
+              },
+              {
+                "group": "Order",
+                "icon": "receipt",
+                "pages": [
+                  "pages/api-reference/endpoint/order/create/order-create",
+                  "pages/api-reference/endpoint/order/refuse/order-refuse",
+                  "pages/api-reference/endpoint/order/print/order-print"
+                ]
+              },
+              {
+                "group": "Payment",
+                "icon": "money-check-dollar",
+                "expanded": false,
+                "pages": [
+                  "pages/api-reference/endpoint/payment/click/index",
+                  "pages/api-reference/endpoint/payment/click/pass",
+                  "pages/api-reference/endpoint/payment/click/fiscalization",
+                  "pages/api-reference/endpoint/payment/payme/index",
+                  "pages/api-reference/endpoint/payment/payme/go",
+                  "pages/api-reference/endpoint/payment/payme/fiscalization",
+                  "pages/api-reference/endpoint/payment/uzum/index",
+                  "pages/api-reference/endpoint/payment/uzum/fastpay",
+                  "pages/api-reference/endpoint/payment/uzum/fiscalization",
+                  "pages/api-reference/endpoint/payment/anor/index",
+                  "pages/api-reference/endpoint/payment/anor/anor",
+                  "pages/api-reference/endpoint/payment/anor/fiscalization"
+                ]
+              },
+              {
+                "group": "Z-Report & X-Report",
+                "icon": "file-waveform",
+                "pages": [
+                  "pages/api-reference/endpoint/report/zreport-open",
+                  "pages/api-reference/endpoint/report/zreport-close",
+                  "pages/api-reference/endpoint/report/zreport-open-print",
+                  "pages/api-reference/endpoint/report/zreport-info",
+                  "pages/api-reference/endpoint/report/zreport-sverka"
+                ]
+              },
+              {
+                "group": "Info",
+                "icon": "circle-info",
+                "pages": [
+                  "pages/api-reference/endpoint/info/info"
+                ]
+              },
+              {
+                "group": "Banners",
+                "icon": "bullhorn",
+                "pages": [
+                  "pages/api-reference/endpoint/banner/banner"
+                ]
+              },
+              {
+                "group": "Billing",
+                "icon": "chart-pie",
+                "pages": [
+                  "pages/api-reference/endpoint/billing/auth/login/login",
+                  "pages/api-reference/endpoint/billing/order-count/order-count"
+                ]
+              },
+              {
+                "group": "Tools",
+                "icon": "pen-ruler",
+                "pages": [
+                  "pages/api-reference/endpoint/tool/cash-drawer/open"
+                ]
+              },
+              {
+                "group": "Customization",
+                "pages": [
+                  "pages/essentials/settings",
+                  "pages/essentials/navigation"
+                ]
+              }
             ]
           }
         ]
       },
       {
-        "tab": "API reference",
-        "groups": [
+        "language": "ru",
+        "tabs": [
           {
-            "group": "API documentation",
-            "pages": [
-              "pages/api-reference/introduction"
+            "tab": "Документация",
+            "groups": [
+              {
+                "group": "Начало работы",
+                "pages": [
+                  "ru/pages/index",
+                  "ru/pages/quickstart",
+                  "ru/pages/development"
+                ]
+              }
             ]
           },
           {
-            "group": "Order",
-            "icon": "receipt",
-            "pages": [
-              "pages/api-reference/endpoint/order/create/order-create",
-              "pages/api-reference/endpoint/order/refuse/order-refuse",
-              "pages/api-reference/endpoint/order/print/order-print"
+            "tab": "API справочник",
+            "groups": [
+              {
+                "group": "Документация API",
+                "pages": [
+                  "ru/pages/api-reference/introduction"
+                ]
+              },
+              {
+                "group": "Заказы",
+                "icon": "receipt",
+                "pages": [
+                  "ru/pages/api-reference/endpoint/order/create/order-create",
+                  "ru/pages/api-reference/endpoint/order/refuse/order-refuse",
+                  "ru/pages/api-reference/endpoint/order/print/order-print"
+                ]
+              },
+              {
+                "group": "Платежи",
+                "icon": "money-check-dollar",
+                "expanded": false,
+                "pages": [
+                  "ru/pages/api-reference/endpoint/payment/click/index",
+                  "ru/pages/api-reference/endpoint/payment/click/pass",
+                  "ru/pages/api-reference/endpoint/payment/click/fiscalization",
+                  "ru/pages/api-reference/endpoint/payment/payme/index",
+                  "ru/pages/api-reference/endpoint/payment/payme/go",
+                  "ru/pages/api-reference/endpoint/payment/payme/fiscalization",
+                  "ru/pages/api-reference/endpoint/payment/uzum/index",
+                  "ru/pages/api-reference/endpoint/payment/uzum/fastpay",
+                  "ru/pages/api-reference/endpoint/payment/uzum/fiscalization",
+                  "ru/pages/api-reference/endpoint/payment/anor/index",
+                  "ru/pages/api-reference/endpoint/payment/anor/anor",
+                  "ru/pages/api-reference/endpoint/payment/anor/fiscalization"
+                ]
+              },
+              {
+                "group": "Z-Отчет и X-Отчет",
+                "icon": "file-waveform",
+                "pages": [
+                  "ru/pages/api-reference/endpoint/report/zreport-open",
+                  "ru/pages/api-reference/endpoint/report/zreport-close",
+                  "ru/pages/api-reference/endpoint/report/zreport-open-print",
+                  "ru/pages/api-reference/endpoint/report/zreport-info",
+                  "ru/pages/api-reference/endpoint/report/zreport-sverka"
+                ]
+              },
+              {
+                "group": "Инфо",
+                "icon": "circle-info",
+                "pages": [
+                  "ru/pages/api-reference/endpoint/info/info"
+                ]
+              },
+              {
+                "group": "Баннеры",
+                "icon": "bullhorn",
+                "pages": [
+                  "ru/pages/api-reference/endpoint/banner/banner"
+                ]
+              },
+              {
+                "group": "Биллинг",
+                "icon": "chart-pie",
+                "pages": [
+                  "ru/pages/api-reference/endpoint/billing/auth/login/login",
+                  "ru/pages/api-reference/endpoint/billing/order-count/order-count"
+                ]
+              },
+              {
+                "group": "Инструменты",
+                "icon": "pen-ruler",
+                "pages": [
+                  "ru/pages/api-reference/endpoint/tool/cash-drawer/open"
+                ]
+              },
+              {
+                "group": "Настройки",
+                "pages": [
+                  "ru/pages/essentials/settings",
+                  "ru/pages/essentials/navigation"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "language": "uz",
+        "tabs": [
+          {
+            "tab": "Hujjatlar",
+            "groups": [
+              {
+                "group": "Boshlash",
+                "pages": [
+                  "uz/pages/index",
+                  "uz/pages/quickstart",
+                  "uz/pages/development"
+                ]
+              }
             ]
           },
           {
-            "group": "Payment",
-            "icon": "money-check-dollar",
-            "expanded": false,
-            "pages": [
-              "pages/api-reference/endpoint/payment/click/index",
-              "pages/api-reference/endpoint/payment/click/pass",
-              "pages/api-reference/endpoint/payment/click/fiscalization",
-              "pages/api-reference/endpoint/payment/payme/index",
-              "pages/api-reference/endpoint/payment/payme/go",
-              "pages/api-reference/endpoint/payment/payme/fiscalization",
-              "pages/api-reference/endpoint/payment/uzum/index",
-              "pages/api-reference/endpoint/payment/uzum/fastpay",
-              "pages/api-reference/endpoint/payment/uzum/fiscalization",
-              "pages/api-reference/endpoint/payment/anor/index",
-              "pages/api-reference/endpoint/payment/anor/anor",
-              "pages/api-reference/endpoint/payment/anor/fiscalization"
-            ]
-          },
-          {
-            "group": "Z-Report & X-Report",
-            "icon": "file-waveform",
-            "pages": [
-              "pages/api-reference/endpoint/report/zreport-open",
-              "pages/api-reference/endpoint/report/zreport-close",
-              "pages/api-reference/endpoint/report/zreport-open-print",
-              "pages/api-reference/endpoint/report/zreport-info",
-              "pages/api-reference/endpoint/report/zreport-sverka"
-            ]
-          },
-          {
-            "group": "Info",
-            "icon": "circle-info",
-            "pages": [
-              "pages/api-reference/endpoint/info/info"
-            ]
-          },
-          {
-            "group": "Banners",
-            "icon": "bullhorn",
-            "pages": [
-              "pages/api-reference/endpoint/banner/banner"
-            ]
-          },
-          {
-            "group": "Billing",
-            "icon": "chart-pie",
-            "pages": [
-              "pages/api-reference/endpoint/billing/auth/login/login",
-              "pages/api-reference/endpoint/billing/order-count/order-count"
-            ]
-          },
-          {
-            "group": "Tools",
-            "icon": "pen-ruler",
-            "pages": [
-              "pages/api-reference/endpoint/tool/cash-drawer/open"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "pages/essentials/settings",
-              "pages/essentials/navigation"
+            "tab": "API ma'lumotnomasi",
+            "groups": [
+              {
+                "group": "API hujjatlari",
+                "pages": [
+                  "uz/pages/api-reference/introduction"
+                ]
+              },
+              {
+                "group": "Buyurtmalar",
+                "icon": "receipt",
+                "pages": [
+                  "uz/pages/api-reference/endpoint/order/create/order-create",
+                  "uz/pages/api-reference/endpoint/order/refuse/order-refuse",
+                  "uz/pages/api-reference/endpoint/order/print/order-print"
+                ]
+              },
+              {
+                "group": "To'lovlar",
+                "icon": "money-check-dollar",
+                "expanded": false,
+                "pages": [
+                  "uz/pages/api-reference/endpoint/payment/click/index",
+                  "uz/pages/api-reference/endpoint/payment/click/pass",
+                  "uz/pages/api-reference/endpoint/payment/click/fiscalization",
+                  "uz/pages/api-reference/endpoint/payment/payme/index",
+                  "uz/pages/api-reference/endpoint/payment/payme/go",
+                  "uz/pages/api-reference/endpoint/payment/payme/fiscalization",
+                  "uz/pages/api-reference/endpoint/payment/uzum/index",
+                  "uz/pages/api-reference/endpoint/payment/uzum/fastpay",
+                  "uz/pages/api-reference/endpoint/payment/uzum/fiscalization",
+                  "uz/pages/api-reference/endpoint/payment/anor/index",
+                  "uz/pages/api-reference/endpoint/payment/anor/anor",
+                  "uz/pages/api-reference/endpoint/payment/anor/fiscalization"
+                ]
+              },
+              {
+                "group": "Z-Hisobot va X-Hisobot",
+                "icon": "file-waveform",
+                "pages": [
+                  "uz/pages/api-reference/endpoint/report/zreport-open",
+                  "uz/pages/api-reference/endpoint/report/zreport-close",
+                  "uz/pages/api-reference/endpoint/report/zreport-open-print",
+                  "uz/pages/api-reference/endpoint/report/zreport-info",
+                  "uz/pages/api-reference/endpoint/report/zreport-sverka"
+                ]
+              },
+              {
+                "group": "Ma'lumot",
+                "icon": "circle-info",
+                "pages": [
+                  "uz/pages/api-reference/endpoint/info/info"
+                ]
+              },
+              {
+                "group": "Bannerlar",
+                "icon": "bullhorn",
+                "pages": [
+                  "uz/pages/api-reference/endpoint/banner/banner"
+                ]
+              },
+              {
+                "group": "Billing",
+                "icon": "chart-pie",
+                "pages": [
+                  "uz/pages/api-reference/endpoint/billing/auth/login/login",
+                  "uz/pages/api-reference/endpoint/billing/order-count/order-count"
+                ]
+              },
+              {
+                "group": "Asboblar",
+                "icon": "pen-ruler",
+                "pages": [
+                  "uz/pages/api-reference/endpoint/tool/cash-drawer/open"
+                ]
+              },
+              {
+                "group": "Sozlamalar",
+                "pages": [
+                  "uz/pages/essentials/settings",
+                  "uz/pages/essentials/navigation"
+                ]
+              }
             ]
           }
         ]

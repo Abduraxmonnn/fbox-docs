@@ -1,0 +1,138 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Orders Count API",
+    "description": "Retrieve aggregated sales statistics for orders",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.fbox.uz"
+    }
+  ],
+  "paths": {
+    "/api/v1/orders/count/": {
+      "get": {
+        "summary": "Get orders count and total amount",
+        "operationId": "getOrdersCount",
+        "tags": ["Orders"],
+        "security": [
+          {
+            "TokenAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2025-05-05T00:00:00"
+            },
+            "description": "Start date in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "2025-05-05T23:59:59"
+            },
+            "description": "End date in ISO 8601 format (YYYY-MM-DDTHH:MM:SS)"
+          },
+          {
+            "name": "inn",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "306429662"
+            },
+            "description": "Company Tax Identification Number (INN)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Orders statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrdersCountResponse"
+                },
+                "example": {
+                  "status": "successfully",
+                  "filters": {
+                    "start_date": "2025-05-05T00:00:00",
+                    "end_date": "2025-05-05T23:59:59",
+                    "inn": "354368473"
+                  },
+                  "data": {
+                    "company_name": "BAR CODE TECHNOLOGIES",
+                    "total_orders": 2,
+                    "total_amount": 700.0
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "TokenAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "Authorization token. Format: Token <token_value>"
+      }
+    },
+    "schemas": {
+      "OrdersCountResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "successfully"
+          },
+          "filters": {
+            "type": "object",
+            "properties": {
+              "start_date": { "type": "string" },
+              "end_date": { "type": "string" },
+              "inn": { "type": "string" }
+            }
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "company_name": { "type": "string" },
+              "total_orders": { "type": "integer" },
+              "total_amount": { "type": "number" }
+            }
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      }
+    }
+  }
+}

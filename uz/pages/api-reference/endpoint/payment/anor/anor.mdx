@@ -1,0 +1,52 @@
+---
+title: Anor to'lovi
+description: Anor orqali to'lovni boshlash
+openapi: 'POST /payment/anor'
+---
+
+## Umumiy ko'rinish
+
+**Anor Payment API** Anor orqali to'lovni boshlash uchun ishlatiladi.
+
+Bu endpoint to'lov tranzaksiyasini yaratadi va `payment_id` qaytaradi
+that must be used later for fiscalization.
+
+---
+
+## So'rov maydonlari
+
+| Maydon | Turi | Majburiy | Tavsif |
+|------|------|----------|-------------|
+| `amount` | integer | ✅ | Payment amount in sums |
+| `qr_code` | string | ✅ | Unique Payme transaction identifier |
+
+---
+
+## Javob maydonlari
+
+### ✅ Muvaffaqiyatli javob `200`
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | object | Javob ma'lumoti |
+| `data.transaction_id` | string | Transaction UUID |
+| `data.status` | string | Payment status (`successfully`, `failed`, etc.) |
+| `data.message` | string | Optional message from provider |
+| `data.error_code` | string | Optional message from provider |
+| `data.payment_id` | string | Unique payment identifier |
+| `data.error_note` | string | Error note |
+| `data.payment_status` | integer | Payment status provided by provider |
+| `data.phone_number` | string | Client phone number |
+| `data.card_number` | string | Client card number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+### 🚫 Xatolik javobi `400`
+
+> **Eslatma:** Validatsiya xatosi bo'lsa ham server HTTP `200` qaytaradi.
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `status` | string | Error status (`successfully`, `error`, etc.) |
+| `message` | string | O'qilishi oson xato xabari |
+| `error_code` | integer | error_code provided by Provider |

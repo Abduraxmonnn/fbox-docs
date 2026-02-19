@@ -1,0 +1,50 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Open Cash Drawer API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://fbox.ngrok.io"
+    }
+  ],
+  "paths": {
+    "/print/open_cash_drawer": {
+      "get": {
+        "summary": "Open cash drawer",
+        "description": "Triggers the opening of a connected cash drawer",
+        "responses": {
+          "200": {
+            "description": "Cash drawer opened successfully",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": null,
+                  "error": null,
+                  "is_success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to open cash drawer",
+            "content": {
+              "application/json": {
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 400,
+                    "message": "Unable to open cash drawer",
+                    "data": null
+                  },
+                  "is_success": false
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

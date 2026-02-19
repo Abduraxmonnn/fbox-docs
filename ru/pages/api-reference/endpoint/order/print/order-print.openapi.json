@@ -1,0 +1,50 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Order Print API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/order/print": {
+      "get": {
+        "summary": "Print last order receipt",
+        "description": "Prints a copy of the last fiscal receipt",
+        "responses": {
+          "200": {
+            "description": "Print result",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "nullable": true
+                    },
+                    "error": {
+                      "type": "object",
+                      "nullable": true,
+                      "properties": {
+                        "code": {
+                          "type": "integer"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "data": {
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "is_success": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

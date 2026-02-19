@@ -1,0 +1,56 @@
+---
+title: Оплата Payme
+description: Инициация платежей через Payme
+openapi: 'POST /payment/payme'
+---
+
+## Обзор
+
+**Payme Go Payment API** используется для инициации платежа через Payme.
+
+Эндпоинт создает платежную транзакцию и возвращает `payment_id`
+that must be used later for fiscalization.
+
+---
+
+## Поля запроса
+
+| Поле | Тип | Обяз. | Описание |
+|------|------|----------|-------------|
+| `amount` | integer | ✅ | Payment amount in sums |
+| `qr_code` | string | ✅ | Unique Payme transaction identifier |
+
+---
+
+## Поля ответа
+
+### ✅ Успешный ответ `200`
+
+| Поле | Тип | Описание |
+|------|------|-------------|
+| `data` | object | Данные ответа |
+| `data.amount` | integer | Payment amount in sums |
+| `data.transaction_id` | string | Transaction UUID |
+| `data.payment_id` | string | Unique payment identifier |
+| `data.inn` | string | Client tax identifier |
+| `data.qr_code` | string | QR code of the transaction |
+| `data.kkm_id` | string | KKM (cash register) ID |
+| `data.device_id` | string | Device ID |
+| `data.status` | string | Payment status (`successfully`, `failed`, etc.) |
+| `data.message` | string | Optional message from provider |
+| `data.client_phone_number` | string | Client phone number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+### 🚫 Ответ с ошибкой `400`
+
+> **Примечание:** Даже при ошибке валидации сервер возвращает HTTP `200`.
+
+| Поле | Тип | Описание |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | object | Error details |
+| `error.code` | integer | Internal error code |
+| `error.message` | string | Понятное описание ошибки |
+| `error.data` | any \| null | Additional error details |
+| `is_success` | boolean | Always `false` |

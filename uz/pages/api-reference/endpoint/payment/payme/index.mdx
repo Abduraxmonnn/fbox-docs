@@ -1,0 +1,78 @@
+---
+title: Payme umumiy ko'rinish
+description: Payme to'lovi va fiskalizatsiya APIlari
+icon: grip-lines
+---
+
+## Umumiy ko'rinish
+
+**Payme API** to'lovni qayta ishlash uchun to'liq oqimni beradi, bunda **to'lovni boshlash** va **fiskalizatsiya** qamrab olinadi.
+
+Integratsiya ikki mustaqil bosqichga bo'linadi:
+
+1. **PayMe Go** – initiates a PayMe payment using an amount and QR code.
+2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
+
+Bu yondashuv ishonchli to'lov qayta ishlash va fiskal talablar bilan moslikni ta'minlaydi.
+
+---
+
+## Umumiy sozlamalar
+
+Barcha Payme endpointlari quyidagi umumiy sozlamalarga ega:
+
+- **Status kodi:** `200`/`400`/`500`
+- **Metod:** `POST`
+- **Avtorizatsiya kerak:** `Yo'q`
+- **Content-Type:** `application/json`
+
+> **Eslatma:** Validatsiya, to'lov yoki fiskalizatsiya xatolari bo'lsa ham API HTTP `200` qaytaradi.
+
+- So'rov muvaffaqiyatli bo'lganini aniqlash uchun har doim `is_success` va `HTTP status code` ni tekshiring.
+- Muvaffaqiyatda `data`, xatolikda `error` qaytadi.
+
+---
+
+## To'lov oqimi
+
+Odatdagi Payme to'lov oqimi quyidagi bosqichlardan iborat:
+
+1. The client initiates a payment via the **PayMe Go API**
+2. PayMe processes the payment and returns a unique `payment_id`
+3. After successful payment, the transaction is sent for **fiscalization**
+4. Fiskal chek yaratiladi va Soliq tizimida ro'yxatdan o'tkaziladi
+
+Har bir bosqich alohida endpoint tomonidan bajariladi.
+
+---
+
+## Payme APIlari
+
+To'lov va fiskalizatsiyani tizimingizga integratsiya qilish uchun quyidagi Payme endpointlarini ko'ring.
+
+<Columns cols={2}>
+    <Card
+        title="PayMe Go"
+        icon="credit-card"
+        href="/uz/api-reference/endpoint/payment/payme/go"
+    >
+        Initiate PayMe payments by providing the payment amount and QR code.
+        Returns a payment identifier used for further fiscal processing.
+    </Card>
+
+    <Card
+        title="Fiskalizatsiya"
+        icon="receipt"
+        href="/uz/api-reference/endpoint/payment/payme/fiscalization"
+    >
+        Fiscalize completed PayMe payments and generate official fiscal receipts.
+    </Card>
+</Columns>
+
+---
+
+## Muhit
+
+Payme APIlari quyidagi muhitlarda mavjud:
+
+- **Payment API**

@@ -1,0 +1,46 @@
+---
+title: Buyurtma chop etish
+description: Oxirgi chek nusxasini chop etish
+openapi: 'GET /order/print'
+---
+
+## Umumiy ko'rinish
+
+**Order Print API** **oxirgi fiskal chek** nusxasini chop etish uchun ishlatiladi.
+
+Ushbu amal fiskal printerga qayta chop etish buyrug'ini yuboradi
+the most recent order without creating a new transaction.
+
+Avtorizatsiya **talab qilinmaydi**.
+
+---
+
+## Javob maydonlari
+
+### ✅ Muvaffaqiyatli javob `200`
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error` | null | Always `null` |
+| `is_success` | boolean | Always `true` |
+
+---
+
+### 🚫 Xatolik javobi `200`
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `data` | null | No data returned |
+| `error.code` | integer | Error code |
+| `error.message` | string | Error description |
+| `error.data` | any \| null | Additional error data |
+| `is_success` | boolean | Always `false` |
+
+---
+
+### Keng tarqalgan xato kodlari
+
+| Kod | Tavsif |
+|-----|------------|
+| `101` | Printer not working |

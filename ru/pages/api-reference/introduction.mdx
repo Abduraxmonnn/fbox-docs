@@ -1,0 +1,32 @@
+---
+title: 'Введение'
+description: 'Обзор структуры API и принципов работы'
+---
+
+<Note>
+  Этот раздел содержит обзор API FiscalBox и ссылки на OpenAPI-спецификацию.
+</Note>
+
+## Добро пожаловать
+
+Документацию API можно поддерживать двумя способами: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) и [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). В этом проекте используется OpenAPI-спецификация.
+
+<Card
+  title="FiscalBox Endpoints"
+  icon="leaf"
+  href="https://github.com/abdullo211/fiscal_document/blob/main/pages/api-reference/openapi.json"
+>
+  Открыть файл OpenAPI-спецификации
+</Card>
+
+## Аутентификация
+
+Для защищенных endpointов используйте токен в заголовке запроса согласно спецификации.
+
+```json
+"security": [
+  {
+    "bearerAuth": []
+  }
+]
+```

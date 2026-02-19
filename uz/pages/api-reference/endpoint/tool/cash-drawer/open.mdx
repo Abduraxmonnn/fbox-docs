@@ -1,0 +1,26 @@
+---
+title: Cash drawer ochish
+description: Cash drawerni masofadan ochish
+openapi: 'GET /print/open_cash_drawer'
+---
+
+## Umumiy ko'rinish
+
+**Open Cash Drawer API** ulangan cash drawerni masofadan ochish uchun ishlatiladi.
+
+Bu endpoint odatda POS tizimlarida cash drawerni qo'lda ochish kerak bo'lganda ishlatiladi
+is required (for example, cash withdrawal or inspection).
+
+---
+
+## Avtorizatsiya
+
+🔓 **Bu endpoint uchun avtorizatsiya talab qilinmaydi**.
+
+---
+
+## Eslatmalar
+
+- The endpoint performs a hardware-related action
+- A successful request does not return any payload data
+- Errors are returned in a unified error object

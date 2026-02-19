@@ -1,0 +1,194 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Payme Fiscalization API",
+    "description": "Fiscalization endpoint for Payme fiscalization",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.fiscalbox.uz"
+    }
+  ],
+  "paths": {
+    "/payment/payme_confirm": {
+      "post": {
+        "summary": "Fiscalization Payme payment",
+        "operationId": "paymeFiscalization",
+        "tags": [
+          "Payme Fiscalization"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FiscalizationRequest"
+              },
+              "example": {
+                "payment_id": "696e0246c9a128176d5934d8",
+                "qr_code": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Fiscalization successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FiscalizationResponse"
+                },
+                "example": {
+                  "data": {
+                    "id": 123,
+                    "result": {
+                      "receipt": {
+                        "_id": "696e0246c9a128176d5934d8",
+                        "create_time": 1768816711011,
+                        "pay_time": 1768816711555
+                      }
+                    },
+                    "error": null
+                  },
+                  "error": null,
+                  "is_success": true
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request (status code: 200)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error400Response"
+                },
+                "example": {
+                  "data": null,
+                  "error": {
+                    "code": 105,
+                    "message": "{\"payme_id\":[\"This field may not be null.\"]}HTTP Exception 400 Bad Request",
+                    "data": null
+                  },
+                  "is_success": false
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "FiscalizationRequest": {
+        "type": "object",
+        "required": [
+          "payment_id",
+          "qr_code"
+        ],
+        "properties": {
+          "payment_id": {
+            "type": "string",
+            "description": "Unique order identifier received in the /payme/go response and provided by Payme.",
+            "example": "696e0246c9a128176d5934d8"
+          },
+          "qr_code": {
+            "type": "string",
+            "description": "Link to fiscalization transaction on Soliq",
+            "example": "https://ofd.soliq.uz/check?t=UZ170703100597&r=2421&c=20230104121801&s=514343190161"
+          }
+        }
+      },
+      "FiscalizationResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "id": {
+                "type": "integer",
+                "nullable": true,
+                "example": 123
+              },
+              "result": {
+                "type": "object",
+                "properties": {
+                  "receipt": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "696e0046c9a1a8176d5974d8"
+                      },
+                      "create_time": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1768816711011
+                      },
+                      "pay_time": {
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1768816711555
+                      }
+                    }
+                  }
+                }
+              },
+              "error": {
+                "type": "string",
+                "nullable": true
+              }
+            }
+          },
+          "error": {
+            "type": "object",
+            "nullable": true
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Error400Response": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "nullable": true,
+            "default": null
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "integer",
+                "example": 7
+              },
+              "message": {
+                "type": "string",
+                "example": "{\"payment_id\":[\"This field may not be blank.\"]}"
+              },
+              "data": {
+                "type": "string",
+                "nullable": true,
+                "default": null
+              }
+            }
+          },
+          "is_success": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      }
+    }
+  }
+}

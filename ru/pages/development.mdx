@@ -1,0 +1,119 @@
+---
+title: "Разработка"
+description: "Интеграционный workflow для FiscalBox API"
+---
+
+## Контур интеграции
+
+Интеграция FiscalBox обычно включает следующие блоки:
+
+- Жизненный цикл заказа (`create`, `print`, `refuse`)
+- Поток платежных провайдеров (Click, Payme, Uzum, Anor)
+- Поток отчетов (Z-report open/close/print/info/sverka)
+- Операции устройства/инструментов (cash drawer, info, banners)
+
+## Предварительные условия
+
+- Доступ к фискальному устройству/терминалу
+- Base URL API для вашей среды
+- Billing credentials (для billing endpointов)
+- Понятное маппирование полей POS в поля запроса FiscalBox
+
+## Рекомендуемый порядок интеграции
+
+<Steps>
+  <Step title="Настройте аутентификацию где требуется">
+
+  Начните с billing auth при интеграции billing-защищенных API:
+  - [Billing Login](/ru/api-reference/endpoint/billing/auth/login/login)
+
+  Храните и обновляйте токены согласно политике безопасности backend.
+
+  </Step>
+
+  <Step title="Реализуйте Order Create как основную транзакцию">
+
+  Начните с:
+  - [Order Create](/ru/api-reference/endpoint/order/create/order-create)
+
+  Проверьте обязательные поля, масштабы числовых значений и сохранение ответа (`receipt_count`, `fiscal_sign`, `qr_url`).
+
+  </Step>
+
+  <Step title="Добавьте маршруты для нужных провайдеров">
+
+  Интегрируйте только тех провайдеров, которые используются в production:
+  - [Click](/ru/api-reference/endpoint/payment/click/index)
+  - [Payme](/ru/api-reference/endpoint/payment/payme/index)
+  - [Uzum](/ru/api-reference/endpoint/payment/uzum/index)
+  - [Anor](/ru/api-reference/endpoint/payment/anor/index)
+
+  Держите правила `extra_info` провайдеров изолированно в adapter-логике.
+
+  </Step>
+
+  <Step title="Добавьте отчетность и ежедневное закрытие">
+
+  Встройте эндпоинты отчетов в операции конца дня:
+  - [Z-Report Open](/ru/api-reference/endpoint/report/zreport-open)
+  - [Z-Report Close](/ru/api-reference/endpoint/report/zreport-close)
+  - Связанные endpointы печати/info/sverka
+
+  </Step>
+
+  <Step title="Реализуйте операционные endpointы">
+
+  Добавьте операции при необходимости:
+  - [Open Cash Drawer](/ru/api-reference/endpoint/tool/cash-drawer/open)
+  - [Info](/ru/api-reference/endpoint/info/info)
+  - [Banner](/ru/api-reference/endpoint/banner/banner)
+
+  </Step>
+
+  <Step title="Подготовьте production-уровень">
+
+  Добавьте:
+  - Audit logging для request/response
+  - Idempotency стратегию для безопасных retry
+  - Политику timeout и retry по типам endpointов
+  - Monitoring фискальных ошибок и сбоев принтера/устройства
+
+  </Step>
+</Steps>
+
+## Checklist маппирования данных
+
+- Проверьте, что денежные/масштабируемые значения соответствуют ожидаемым единицам (`*100`, `*1000`).
+- Убедитесь, что обязательные метаданные товара всегда передаются (`barcode`, `class_code`, `package_code` и т.д.).
+- Валидируйте optional-поля, которые могут стать обязательными для конкретных методов оплаты.
+- Сохраняйте фискальные поля ответа для сверки и support-операций.
+
+## Стратегия тестирования
+
+1. Используйте sandbox/тестовые устройства для интеграционных тестов.
+2. Покройте успешные и ошибочные payloadы для каждого критичного endpointа.
+3. Проведите end-to-end тест полного дневного цикла: open -> sales -> close.
+4. Проверьте печать чека и QR-ссылки в реальных условиях устройства.
+
+## Готовность к production
+
+- Используйте безопасное хранение токенов на стороне сервера.
+- Избегайте дубликатов фискальных операций без idempotency keys/проверок.
+- Ведите структурированные логи с request ID и фискальными идентификаторами ответа.
+- Определите fallback UX для временных сбоев API или устройства.
+
+## Частые риски интеграции
+
+<AccordionGroup>
+  <Accordion title="Несоответствие масштаба суммы">
+    Значения в неверном масштабе приводят к ошибкам суммы или фискальному отказу. Вынесите правила конвертации в один сервис/модуль.
+  </Accordion>
+
+  <Accordion title="Ошибки полей конкретного провайдера">
+    Платежные провайдеры могут требовать дополнительные поля в зависимости от сценария. Валидируйте payload провайдера до отправки.
+  </Accordion>
+
+  <Accordion title="Дубликаты фискальных операций при retry">
+    Retry без idempotency-проверок может создать дубликаты операций. Добавьте retry guard и request tracing.
+  </Accordion>
+</AccordionGroup>

@@ -1,0 +1,78 @@
+---
+title: Обзор Anor
+description: API инициации платежей и фискализации Anor
+icon: grip-lines
+---
+
+## Обзор
+
+**Anor API** предоставляет полный процесс обработки платежей, включая **инициацию платежа** и **фискализацию**.
+
+Интеграция разделена на два независимых этапа:
+
+1. **Anor Payment** – initiates a Anor payment using an amount and QR code.
+2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
+
+Этот подход обеспечивает надежную обработку платежей и соответствие фискальным требованиям.
+
+---
+
+## Общие настройки
+
+Все эндпоинты Anor используют общие настройки:
+
+- **Код статуса:** `200`/`400`/`500`
+- **Метод:** `POST`
+- **Требуется авторизация:** `Нет`
+- **Content-Type:** `application/json`
+
+> **Примечание:** Даже при ошибках валидации, платежа или фискализации API возвращает HTTP `200`.
+
+- Всегда проверяйте `is_success` и `HTTP status code`, чтобы определить успешность запроса.
+- `data` содержит данные при успехе, `error` содержит детали ошибки.
+
+---
+
+## Anor Flow
+
+Типичный поток платежа Anor состоит из следующих шагов:
+
+1. The client initiates a payment via the **Anor Payment API**
+2. Anor processes the payment and returns a unique `payment_id`
+3. After successful payment, the transaction is sent for **fiscalization**
+4. Формируется фискальный чек и регистрируется в системе Soliq
+
+Каждый этап обрабатывается отдельным эндпоинтом.
+
+---
+
+## API Anor
+
+Изучите эндпоинты Anor ниже для интеграции платежей и фискализации в вашей системе.
+
+<Columns cols={2}>
+    <Card
+        title="Anor Payment"
+        icon="credit-card"
+        href="/ru/api-reference/endpoint/payment/anor/anor"
+    >
+        Initiate Anor payments by providing the payment amount and QR code.
+        Returns a payment identifier used for further fiscal processing.
+    </Card>
+
+    <Card
+        title="Фискализация"
+        icon="receipt"
+        href="/ru/api-reference/endpoint/payment/anor/fiscalization"
+    >
+        Fiscalize completed Anor payments and generate official fiscal receipts.
+    </Card>
+</Columns>
+
+---
+
+## Среда
+
+API Anor доступны в следующих окружениях:
+
+- **Anor API**

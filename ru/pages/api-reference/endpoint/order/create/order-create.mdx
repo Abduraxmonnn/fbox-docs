@@ -1,0 +1,119 @@
+---
+title: Создание заказа
+description: Создание заказа (продажа, аванс, кредит)
+openapi: 'POST /order/create'
+---
+
+## Обзор
+
+**Order Create API** позволяет создать новый заказ: продажа, аванс или кредитный заказ.
+
+Эндпоинт поддерживает подробные данные о товарах, ценах, скидках, НДС и дополнительные данные оплаты (Payme, Click, Uzum, Anor).
+
+> **Примечание:** Необязательные поля отмечены `*`. Для интеграции с внешними платежными провайдерами некоторые поля `extra_info` становятся обязательными.
+
+---
+
+## Авторизация
+
+🔓 **Авторизация для этого эндпоинта НЕ требуется**.
+
+---
+
+## Поля запроса
+
+| Поле | Тип | Обяз. | Описание |
+|-------|------|----------|-------------|
+| `number` | integer | ✅ | Order number / Номер чека |
+| `receipt_type` | string | ✅ | Type of receipt (`order`, `prepaid`, `credit`) |
+| `products` | array | ✅ | List of products in the order |
+| `products.name` | string | ✅ | Product name |
+| `products.barcode` | string | ✅ | Product barcode (GTIN) |
+| `products.amount` | integer | ✅ | Product amount multiplied by 1000 |
+| `products.unit_name` | string | ✅ | Unit name (displayed on receipt) |
+| `products.price` | integer | ✅ | Price for amount (price * amount * 100) |
+| `products.product_price` | integer | ✅ | Unit price multiplied by 100 |
+| `products.vat` | integer | ✅ | VAT amount multiplied by 100 |
+| `products.vat_percent` | integer | ✅ | VAT percentage |
+| `products.discount` | integer | ✅ | Discount multiplied by 100 |
+| `products.discount_percent` | integer | ✅ | Discount percentage |
+| `products.other` | integer | ✅ | Other payments (gift card, loyalty card) |
+| `products.labels` | array | ✅ | Marking codes list (DataMatrix) |
+| `products.class_code` | string | ✅ | Product class code (IKPU) |
+| `products.package_code` | string | ✅ | Package code |
+| `products.owner_type` | integer | ✅ | Owner type (0,1,2) |
+| `products.comission_info` | object | ✅ | Commission info (`inn`, `pinfl`) |
+| `uuid` | string | * | Your UUID |
+| `time` | string | ✅ | Time in format `yyyy-MM-dd HH:mm:ss` |
+| `cashier` | string | ✅ | Cashier name |
+| `received_cash` | integer | ✅ | Received cash price multiplied by 100 |
+| `change` | integer | ✅ | Change price multiplied by 100 |
+| `received_card` | integer | ✅ | Received card payment multiplied by 100 |
+| `card_type` | integer | ✅ | Card type (1-corporate,2-personal,3-social) |
+| `ppt_id` | string | ✅ | RRN / PPT ID from bank pinpad slip |
+| `scan2pay_paid` | boolean | * | Payment via Scan2Pay |
+| `extra_info` | object | * | Payment extra info (QR ID, phone number, card number, etc.) |
+| `send_email` | boolean | * | Send order data via email |
+| `email` | string | * | Email address |
+| `sms_phone_number` | string | * | Phone number for SMS |
+| `open_cashbox` | boolean | * | Open cash drawer |
+| `banners` | array | * | Banner info (text or barcode) |
+| `prices` | array | * | Payment prices and VAT details |
+
+---
+
+## Поля ответа
+
+### ✅ Успешный ответ `200`
+
+| Поле | Тип | Описание |
+|-------|------|-------------|
+| `data` | object | Данные ответа |
+| `data.terminal_id` | string | Fiscal module number |
+| `data.receipt_count` | integer | Receipt number |
+| `data.date_time` | string | Date/time in `YYYYMMDDHHMMSS` format |
+| `data.fiscal_sign` | string | Fiscal sign number |
+| `data.applet_version` | string | Applet version |
+| `data.qr_url` | string | QR code URL for fiscal receipt |
+| `data.cash_box_number` | string | Cash drawer number |
+| `error` | null | Error object (always `null` on success) |
+| `is_success` | boolean | Always `true` |
+
+**Example:**
+
+```json
+{
+  "data": {
+    "terminal_id": "UZ170703100189",
+    "receipt_count": 643,
+    "date_time": "20200518221403",
+    "fiscal_sign": "248429044289",
+    "applet_version": "0300",
+    "qr_url": "https://ofd.soliq.uz/check?t=UZ170703100189&r=643&c=20200518221403&s=248429044289",
+    "cash_box_number": "01"
+  },
+  "error": null,
+  "is_success": true
+}
+```
+🚫 Ответ с ошибкой 200
+Поле	Тип	Описание
+data	null	No data returned
+error	object	Error details
+error.code	integer	Error code
+error.message	string	Понятное описание ошибки
+error.data	any	Optional extra error data
+is_success	boolean	Always false
+
+Example:
+```json
+{
+    "data": null,
+    "error": {
+        "code": 101,
+        "message": "Printer not working",
+        "data": null
+    },
+    "is_success": false
+    }
+```

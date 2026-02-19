@@ -1,0 +1,77 @@
+---
+title: Обзор Uzum
+description: API инициации платежей и фискализации Uzum
+icon: grip-lines
+---
+
+## Обзор
+
+**Uzum FastPay API** обеспечивает обработку платежей через Uzum FastPay, включая **инициацию платежа** и **фискализацию**.
+
+Интеграция разделена на два независимых этапа:
+
+1. **Uzum FastPay Payment** – initiates a payment using an amount and QR code.
+2. **Fiscalization** – confirms the completed payment and registers it with the fiscal system.
+
+Такой подход обеспечивает надежную обработку платежей и соответствие фискальным требованиям.
+
+---
+
+## Общие настройки
+
+Все эндпоинты Uzum используют общие настройки:
+
+- **Код статуса:** `200`/`400`/`500`
+- **Метод:** `POST`
+- **Требуется авторизация:** `Нет`
+- **Content-Type:** `application/json`
+
+> **Примечание:** Даже при ошибках валидации, платежа или фискализации API возвращает HTTP `200`.
+
+- Всегда проверяйте `is_success` и `HTTP status code`, чтобы определить успешность запроса.
+- `data` содержит данные при успехе, `error` содержит детали ошибки.
+
+---
+
+## Поток оплаты
+
+Типичный поток платежа Uzum FastPay состоит из следующих шагов:
+
+1. The client initiates a payment via the **Uzum FastPay Payment API**
+2. Uzum processes the transaction and returns a unique `payment_id`
+3. After successful payment, the transaction is sent for **fiscalization**
+4. Формируется фискальный чек и регистрируется в системе Soliq
+
+Каждый этап обрабатывается отдельным эндпоинтом.
+
+---
+
+## API Uzum FastPay
+
+Используйте разделы ниже для изучения эндпоинтов платежей и фискализации Uzum FastPay.
+
+<Columns cols={2}>
+    <Card
+        title="Uzum FastPay Payment"
+        icon="credit-card"
+        href="/ru/api-reference/endpoint/payment/uzum/fastpay"
+    >
+        Initiate Uzum FastPay payments by providing the payment amount and QR code.
+        Returns a payment identifier for further processing.
+    </Card>
+
+    <Card
+        title="Фискализация"
+        icon="receipt"
+        href="/ru/api-reference/endpoint/payment/uzum/fiscalization"
+    >
+        Fiscalize completed Uzum FastPay payments and generate official fiscal receipts.
+    </Card>
+</Columns>
+
+---
+
+## Среда
+
+API Uzum FastPay доступны по следующему base URL:
+

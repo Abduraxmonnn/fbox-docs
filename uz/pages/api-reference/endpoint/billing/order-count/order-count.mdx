@@ -1,0 +1,62 @@
+---
+title: Buyurtmalar soni
+description: Buyurtmalar bo'yicha savdo statistikasi
+openapi: 'GET /api/v1/orders/count/'
+---
+
+## Umumiy ko'rinish
+
+**Orders Count API** tanlangan davrda aniq kompaniya uchun yig'ilgan savdo ma'lumotlarini olish uchun ishlatiladi.
+
+Bu endpoint buyurtmalarning umumiy soni va umumiy savdo summasini qaytaradi
+based on the provided filters.
+
+---
+
+## Avtorizatsiya
+
+🔓 This endpoint **requires authentication**.
+
+**Header:**
+
+Authorization: Token `<token_value>`
+
+
+Token `Token` prefiksi va bo'sh joy bilan yuborilishi kerak.
+
+---
+
+## So'rov parametrlari
+
+| Parametr | Turi | Majburiy | Tavsif |
+|---------|------|----------|-------------|
+| `start_date` | string | ✅ | Start date in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`). The `T` between date and time is mandatory |
+| `end_date` | string | ✅ | End date in ISO 8601 format (`YYYY-MM-DDTHH:MM:SS`). The `T` between date and time is mandatory |
+| `inn` | string | ✅ | Company INN (Tax Identification Number) |
+
+---
+
+## Javob maydonlari
+
+### ✅ Muvaffaqiyatli javob `200`
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `status` | string | So'rov holati (`successfully`) |
+| `filters` | object | Applied filters |
+| `filters.start_date` | string | Start date |
+| `filters.end_date` | string | End date |
+| `filters.inn` | string | Company INN |
+| `data` | object | Aggregated sales data |
+| `data.company_name` | string | Company name |
+| `data.total_orders` | integer | Total number of orders |
+| `data.total_amount` | number | Total sales amount |
+
+---
+
+### 🚫 Xatolik javobi `400`
+
+| Maydon | Turi | Tavsif |
+|------|------|-------------|
+| `status` | string | Error status |
+| `message` | string | O'qilishi oson xato xabari |
