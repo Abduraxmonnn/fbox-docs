@@ -6,7 +6,7 @@
     "description": "Create orders, including sales, advance payments, or credit."
   },
   "paths": {
-    "/order/create/": {
+    "/order/create": {
       "post": {
         "summary": "Create an order",
         "operationId": "createOrder",
