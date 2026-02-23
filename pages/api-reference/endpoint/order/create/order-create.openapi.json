@@ -176,7 +176,6 @@
               "type": "object",
               "required": [
                 "name",
-                "barcode",
                 "amount",
                 "unit_name",
                 "price",
