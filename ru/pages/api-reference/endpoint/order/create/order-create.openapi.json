@@ -5,6 +5,11 @@
     "version": "1.0.0",
     "description": "Create orders, including sales, advance payments, or credit."
   },
+  "servers": [
+    {
+      "url": "https://fbox.ngrok.io"
+    }
+  ],
   "paths": {
     "/order/create": {
       "post": {
@@ -185,7 +190,6 @@
                 "discount",
                 "discount_percent",
                 "other",
-                "labels",
                 "class_code",
                 "package_code",
                 "owner_type"
