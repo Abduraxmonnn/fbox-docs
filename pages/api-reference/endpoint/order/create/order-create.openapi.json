@@ -188,8 +188,7 @@
                 "labels",
                 "class_code",
                 "package_code",
-                "owner_type",
-                "comission_info"
+                "owner_type"
               ],
               "properties": {
                 "name": {
