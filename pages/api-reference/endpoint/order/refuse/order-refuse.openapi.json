@@ -28,6 +28,24 @@
                   "cashier": {
                     "type": "string"
                   },
+                  "qr_code": {
+                    "type": "string"
+                  },
+                  "received_cash": {
+                    "type": "integer"
+                  },
+                  "received_card": {
+                    "type": "integer"
+                  },
+                  "change": {
+                    "type": "integer"
+                  },
+                  "card_type": {
+                    "type": "integer"
+                  },
+                  "ppt_id": {
+                    "type": "string"
+                  },
                   "products": {
                     "type": "array",
                     "items": {
@@ -50,6 +68,53 @@
                         },
                         "product_price": {
                           "type": "number"
+                        },
+                        "vat": {
+                          "type": "integer"
+                        },
+                        "vat_percent": {
+                          "type": "integer"
+                        },
+                        "discount": {
+                          "type": "integer"
+                        },
+                        "discount_percent": {
+                          "type": "integer"
+                        },
+                        "other": {
+                          "type": "integer"
+                        },
+                        "labels": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "example": [
+                            "05367567230048c?eN1(o0029"
+                          ]
+                        },
+                        "class_code": {
+                          "type": "string"
+                        },
+                        "package_code": {
+                          "type": "integer"
+                        },
+                        "owner_type": {
+                          "type": "integer"
+                        },
+                        "comission_info": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "inn": {
+                                "type": "string"
+                              },
+                              "pinfl": {
+                                "description": "price multiplied by 100"
+                              }
+                            }
+                          }
                         }
                       },
                       "required": [
@@ -58,7 +123,71 @@
                         "amount",
                         "unit_name",
                         "price",
-                        "product_price"
+                        "product_price",
+                        "vat",
+                        "vat_percent",
+                        "discount",
+                        "discount_percent",
+                        "other",
+                        "class_code",
+                        "package_code",
+                        "owner_type"
+                      ]
+                    }
+                  },
+                  "extra_info": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "phone_number": {
+                          "type": "string"
+                        },
+                        "qr_payment_id": {
+                          "type": "string"
+                        },
+                        "qr_payment_provider": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "send_email": {
+                    "type": "boolean",
+                    "default": false
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "sms_phone_number": {
+                    "type": "string",
+                    "example": "+998712565009"
+                  },
+                  "prices": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "price": {
+                          "type": "integer",
+                          "description": "price multiplied by 100"
+                        },
+                        "vat_type": {
+                          "type": "string"
+                        },
+                        "vat_price": {
+                          "type": "integer",
+                          "description": "vat price multiplied by 100"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "price",
+                        "vat_price",
+                        "vat_type"
                       ]
                     }
                   }
@@ -67,7 +196,14 @@
                   "number",
                   "time",
                   "cashier",
-                  "products"
+                  "products",
+                  "qr_code",
+                  "received_cash",
+                  "change",
+                  "received_card",
+                  "card_type",
+                  "ppt_id",
+                  "prices"
                 ]
               }
             }
@@ -106,7 +242,17 @@
                     },
                     "error": {
                       "type": "object",
-                      "nullable": true
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "integer"
+                        },
+                        "data": {
+                          "type": "string"
+                        }
+                      }
                     },
                     "is_success": {
                       "type": "boolean"
